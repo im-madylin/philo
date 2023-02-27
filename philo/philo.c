@@ -6,14 +6,14 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/02/14 20:58:19 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/02/27 21:03:13 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 #include <stdio.h> //
-int	initialize_t_argv(int argc, char *src[], t_argv *argv)
+int	initialize_t_argv(int argc, char *src[], int argv[][5])
 {
 	int	tmp[5];
 	int	i;
@@ -30,48 +30,45 @@ int	initialize_t_argv(int argc, char *src[], t_argv *argv)
 		if (tmp[j] == 0 || tmp[j] > INT_MAX)
 			return (0);
 		i++;
+		j++;
 	}
-	argv->num_philo = tmp[0];
-	argv->time_die = tmp[1];
-	argv->time_eat = tmp[2];
-	argv->time_sleep = tmp[3];
-	argv->must_eat = 0;
+	(*argv)[NUM_PHILO] = tmp[0];
+	(*argv)[TIME_DIE] = tmp[1];
+	(*argv)[TIME_EAT] = tmp[2];
+	(*argv)[TIME_SLEEP] = tmp[3];
+	(*argv)[MUST_EAT] = 0;
 	if (argc == 6)
-		argv->must_eat = tmp[4];
+		(*argv)[MUST_EAT] = tmp[4];
 	return (1);
 }
 
-int	test(void *argv)
-{
-	// t_table	**table;
-
-	// table = (t_table)argv
-	(void)argv;
-	return (0);
-}
-
-int	create_monitoring_thread(t_table **table)
-{
-	pthread_t	monitoring;
-
-	(void)table;
-	if (pthread_create(&monitoring, NULL, (void *)test, NULL) != 0)
-		return (0);
-	return (0);
-}
+// int	test(void *argv)
+// {
+// 	printf("")
+// 	(void)argv;
+// 	return (0);
+// }
 
 int	main(int argc, char *argv[])
 {
-	// t_table	*table;
 	t_table	table;
+	int	i;
 
 	if (argc != 5 && argc != 6)
 		return (0);
-	// table = (t_table *)ft_malloc(sizeof(t_table));
-	// if (initialize_t_argv(argc, argv, &(table->argv)) == 0)
-	if (initialize_t_argv(argc, argv, &table.argv) == 0)
-		// return (safe_free(&table));
+	if (initialize_t_argv(argc, argv, &(table.argv)) == 0)
 		return (0);
-	printf("%d, %d, %d, %d, %d\n", table.argv.num_philo, table.argv.time_die, table.argv.time_eat, table.argv.time_sleep, table.argv.must_eat);
-	
+	i = 0;
+	while (i < table.argv[NUM_PHILO])
+	{
+		if (pthread_mutex_init(&(table.forks[i].mutex), NULL) != 0)
+			return (0);
+		i++;
+	}
+	// while (i < table.argv[NUM_PHILO])
+	// {
+	// 	if (pthread_create(&(table.philos[i]), NULL, (void *)test, NULL) != 0)
+	// 		return (0); // 기존 스레드 종료?
+	// 	i++;
+	// }
 }
