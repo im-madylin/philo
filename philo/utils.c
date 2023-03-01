@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:14:11 by hahlee            #+#    #+#             */
-/*   Updated: 2023/02/14 20:42:09 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/01 17:30:30 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	*ft_malloc(size_t size)
 	return (tmp);
 }
 
-int	safe_free(void **ptr)
+int	safe_free(void **ptr, int result)
 {
 	free(*ptr);
 	*ptr = NULL;
-	return (0);
+	return (result);
 }
 
 size_t	ft_strlen(const char *s)
