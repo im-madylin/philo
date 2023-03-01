@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/01 21:07:55 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/01 21:38:58 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	init_philo(t_table **table)
 		(*table)->philos[i].is_alive = LIVE;
 		(*table)->philos[i].forks[LEFT] = (*table)->forks[(*table)->argv[NUM_PHILO] - i - 1];
 		(*table)->philos[i].forks[RIGHT] = (*table)->forks[(*table)->argv[i]];
+		(*table)->philos[i].argv = (*table)->argv;
+		(*table)->philos[i].start = (*table)->start;
 		i++;
 	}
 	return (0);
@@ -97,7 +99,10 @@ int	init_thread(t_table **table)
 
 int	test(t_philo *philo)
 {
+	struct timeval end;
 	printf("hi! im %d\n", philo->num);
+	gettimeofday(&end, NULL);
+	printf("%ld\n", (end.tv_sec - philo->start.tv_sec) + ((end.tv_usec - philo->start.tv_usec) / 1000000));
 	return (0);
 }
 
@@ -109,6 +114,8 @@ int	main(int argc, char *argv[])
 		return (0);
 	table = (t_table *)malloc(sizeof(t_table));
 	if (table == NULL)
+		return (0);
+	if (gettimeofday(&(table->start), NULL) == -1)
 		return (0);
 	if (init_argv(argc, argv, &(table->argv)) == 0)
 		return (0); //유효하지 않은 인자 에러

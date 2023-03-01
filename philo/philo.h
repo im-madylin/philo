@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/01 20:55:40 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/01 21:31:48 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_philo
 	int			num;
 	int			is_alive;
 	t_fork		forks[2];
+	int			*argv;
+	struct timeval	start;
 }	t_philo;
 
 typedef	struct s_table
@@ -48,7 +50,8 @@ typedef	struct s_table
 	pthread_t	*threads;
 	t_philo		*philos;
 	t_fork		*forks;
-	int	argv[5];
+	int			argv[5];
+	struct timeval	start;
 }	t_table;
 
 /* philo.c */
