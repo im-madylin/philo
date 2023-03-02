@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/01 21:31:48 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:19:39 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <unistd.h>
 
 #define INT_MAX 2147483647
 #define LEFT 0
@@ -42,7 +43,7 @@ typedef struct s_philo
 	int			is_alive;
 	t_fork		forks[2];
 	int			*argv;
-	struct timeval	start;
+	struct timeval	*start;
 }	t_philo;
 
 typedef	struct s_table
