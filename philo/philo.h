@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 16:28:53 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:08:35 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	int			num;
 	int			is_live;
 	t_fork		*forks[2];
-	int			*argv[5];
+	int			*argv;
 	t_time		*start;
 	t_time		recent;
 }	t_philo;
@@ -78,9 +78,9 @@ long	get_time_diff(t_philo *philo, int flag);
 
 /* init_struct.c */
 int	init_argv(int argc, char *src[], int argv[][5]);
-int	init_fork(t_table **table);
-int	init_philo(t_table **table);
-int	init_thread(t_table **table);
+int	init_fork(t_table *table);
+int	init_philo(t_table *table);
+int	init_thread(t_table *table);
 
 /* utils.c */
 int	ft_atoi(const char *str);

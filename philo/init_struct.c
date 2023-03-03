@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 16:45:46 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:52:51 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,59 +40,59 @@ int	init_argv(int argc, char *src[], int argv[][5])
 	return (1);
 }
 
-int	init_fork(t_table **table)
+int	init_fork(t_table *table)
 {
 	int		i;
 
-	(*table)->forks = (t_fork *)malloc(sizeof(t_fork) * (*table)->argv[NUM_PHILO]);
-	if ((*table)->forks == NULL)
+	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->argv[NUM_PHILO]);
+	if (table->forks == NULL)
 		return (-1); //table ㅎㅐ제 해야함
 	i = 0;
-	while (i < (*table)->argv[NUM_PHILO])
+	while (i < table->argv[NUM_PHILO])
 	{
-		if (pthread_mutex_init(&((*table)->forks[i].mutex), NULL) != 0)
-			return (safe_free((void **)&(*table)->forks, -1));
-		(*table)->forks[i].state = UNLOCK;
+		if (pthread_mutex_init(&(table->forks[i].mutex), NULL) != 0)
+			return (safe_free((void **)&table->forks, -1));
+		table->forks[i].state = UNLOCK;
 		i++;
 	}
 	return (0);
 }
 
-int	init_philo(t_table **table)
+int	init_philo(t_table *table)
 {
-	t_table	*t;
+	t_philo	*philo;
 	int		i;
 
-	t = *table;
-	t->philos = (t_philo *)malloc(sizeof(t_philo) * t->argv[NUM_PHILO]);
-	if ((*table)->philos == NULL)
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->argv[NUM_PHILO]);
+	if (table->philos == NULL)
 		return (-1); //forks 를 여기서 free?
 	i = 0;
-	while (i < (*table)->argv[NUM_PHILO])
+	while (i < table->argv[NUM_PHILO])
 	{
-		(*table)->philos[i].num = i;
-		(*table)->philos[i].is_live = LIVE;
-		(*table)->philos[i].forks[LEFT] = &((*table)->forks[(*table)->argv[NUM_PHILO] - i - 1]);
-		(*table)->philos[i].forks[RIGHT] = &((*table)->forks[i]);
-		*(*table)->philos[i].argv = &((*table)->argv[i]);
-		(*table)->philos[i].start = &((*table)->start);
-		(*table)->philos[i].recent = (*table)->start;
+		philo = (table->philos + i);
+		philo->num = i;
+		philo->is_live = LIVE;
+		philo->forks[LEFT] = &(table->forks[table->argv[NUM_PHILO] - i - 1]);
+		philo->forks[RIGHT] = &(table)->forks[i];
+		philo->argv = table->argv;
+		philo->start = &(table->start);
+		philo->recent = table->start;
 		i++;
 	}
 	return (0);
 }
 
-int	init_thread(t_table **table)
+int	init_thread(t_table *table)
 {
 	int	i;
 
-	(*table)->threads = (pthread_t *)malloc(sizeof(pthread_t) * (*table)->argv[NUM_PHILO]);
-	if ((*table)->threads == NULL)
+	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * table->argv[NUM_PHILO]);
+	if (table->threads == NULL)
 		return (-1); //fork, philo ㅇㅕ기서 free?
 	i = 0;
-	while (i < (*table)->argv[NUM_PHILO])
+	while (i < table->argv[NUM_PHILO])
 	{
-		if (pthread_create(&((*table)->threads[i]), NULL, (void *)test, &((*table)->philos[i])) != 0)
+		if (pthread_create(&(table->threads[i]), NULL, (void *)test, &(table->philos[i])) != 0)
 			return (-1); // 기존 스레드 종료? 리턴값 고민해보기
 		i++;
 	}
