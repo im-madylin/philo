@@ -8,7 +8,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/philo/a.out",
+            "program": "${workspaceFolder}/philo/philo",
             "args": ["5","5","5","5","5"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

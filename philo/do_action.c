@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/02 21:48:21 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 12:56:56 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ int	do_eat(t_philo *philo)
 {
 	if (am_i_dead(philo) == DEAD)
 		return (0);
-	pthread_mutex_lock(&philo->forks[LEFT].mutex);
 	philo->forks[LEFT].state = LOCK;
-	pthread_mutex_lock(&philo->forks[RIGHT].mutex);
 	philo->forks[RIGHT].state = LOCK;
+	pthread_mutex_lock(&philo->forks[LEFT].mutex);
+	pthread_mutex_lock(&philo->forks[RIGHT].mutex);
 	printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
 	printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
 	printf("%s%ld %d is eating\n", C_GREN, get_time_diff(philo, START), philo->num);
 
+	gettimeofday(&(philo->recent), NULL);
 	usleep(philo->argv[TIME_EAT]); //usleep 정확도 체크 필요
 	
 	pthread_mutex_unlock(&philo->forks[LEFT].mutex);
-	philo->forks[LEFT].state = UNLOCK;
 	pthread_mutex_unlock(&philo->forks[RIGHT].mutex);
+	philo->forks[LEFT].state = UNLOCK;
 	philo->forks[RIGHT].state = UNLOCK;
 	return (1);
 }

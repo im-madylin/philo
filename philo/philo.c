@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/02 21:32:00 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 11:24:31 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h> //
 int	test(t_philo *philo)
 {
+	//왜 think 안하는지 확인해보기
 	while (am_i_dead(philo) == LIVE)
 	{
 		if (philo->forks[LEFT].state == LOCK && philo->forks[RIGHT].state == LOCK)
