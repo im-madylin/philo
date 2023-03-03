@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/02 21:47:39 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 16:28:53 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct s_philo
 {
 	int			num;
 	int			is_live;
-	t_fork		forks[2];
-	int			*argv;
+	t_fork		*forks[2];
+	int			*argv[5];
 	t_time		*start;
 	t_time		recent;
 }	t_philo;

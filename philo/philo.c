@@ -6,19 +6,19 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 11:24:31 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:27:28 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include <stdio.h> //
 int	test(t_philo *philo)
 {
 	//왜 think 안하는지 확인해보기
 	while (am_i_dead(philo) == LIVE)
 	{
-		if (philo->forks[LEFT].state == LOCK && philo->forks[RIGHT].state == LOCK)
+		printf("-----[%d] left : %d, right : %d\n", philo->num, philo->forks[LEFT]->state, philo->forks[RIGHT]->state);
+		if (philo->forks[LEFT]->state == LOCK || philo->forks[RIGHT]->state == LOCK)
 		{
 			if (do_think(philo) == 0)
 				return (0);
