@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 17:52:51 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:35:18 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	init_thread(t_table *table)
 	i = 0;
 	while (i < table->argv[NUM_PHILO])
 	{
-		if (pthread_create(&(table->threads[i]), NULL, (void *)test, &(table->philos[i])) != 0)
+		if (pthread_create(&(table->threads[i]), NULL, (void *)do_action, &(table->philos[i])) != 0)
 			return (-1); // 기존 스레드 종료? 리턴값 고민해보기
 		i++;
 	}

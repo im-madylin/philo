@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 17:08:35 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:35:07 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ typedef	struct s_table
 }	t_table;
 
 /* philo.c */
-int	test(t_philo *philo);
 
 /* do_action.c */
+int	do_action(t_philo *philo);
 int	do_eat(t_philo *philo);
 int	do_sleep(t_philo *philo);
 int	do_think(t_philo *philo);
 
 /* check_state.c */
-int	am_i_dead(t_philo *philo);
+int	am_i_die(t_philo *philo);
 long	get_time_diff(t_philo *philo, int flag);
 
 /* init_struct.c */

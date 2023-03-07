@@ -6,29 +6,16 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 16:47:58 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/07 22:08:27 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	test(t_philo *philo)
+int	check_die(t_philo *table)
 {
-	//왜 think 안하는지 확인해보기
-	while (am_i_dead(philo) == LIVE)
-	{
-		printf("-----[%d] left : %d, right : %d\n", philo->num, philo->forks[LEFT]->state, philo->forks[RIGHT]->state);
-		if (philo->forks[LEFT]->state == LOCK || philo->forks[RIGHT]->state == LOCK)
-		{
-			if (do_think(philo) == 0)
-				return (0);
-		}
-		if (do_eat(philo) == 0)
-			return (0);
-		if (do_sleep(philo) == 0)
-			return (0);
-	}
-	return (0);
+	while ()
+	//필로들 돌면서 누구 하나 죽었으면 다 detach?
 }
 
 int	main(int argc, char *argv[])

@@ -6,13 +6,13 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/03 17:53:17 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/07 13:29:21 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	am_i_dead(t_philo *philo)
+int	am_i_die(t_philo *philo)
 {
 	if (get_time_diff(philo, RECENT) > philo->argv[TIME_DIE])
 	{
