@@ -6,16 +6,42 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/07 22:08:27 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:48:55 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_die(t_philo *table)
+int	check_die(t_table *table)
 {
-	while ()
-	//필로들 돌면서 누구 하나 죽었으면 다 detach?
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < table->argv[NUM_PHILO])
+	{
+		pthread_detach(table->threads[i]);
+		i++;
+	}
+	j = 0;
+	while (1)
+	{
+		i = 0;
+		while (i < table->argv[NUM_PHILO])
+		{
+			if (table->philos[i].is_live == DIE)
+			{
+				while (j < table->argv[NUM_PHILO])
+				{
+					table->philos[j].is_live = DIE;
+					j++;
+				}
+				return (0);
+			}
+			i++;
+		}
+	}
+	return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -24,9 +50,6 @@ int	main(int argc, char *argv[])
 
 	if (argc != 5 && argc != 6)
 		return (0);
-	// table = (t_table *)malloc(sizeof(t_table));
-	// if (table == NULL)
-	// 	return (0);
 	if (init_argv(argc, argv, &(table.argv)) == 0)
 		return (0); //유효하지 않은 인자 에러
 	if (init_fork(&table) == -1)
@@ -37,10 +60,6 @@ int	main(int argc, char *argv[])
 		return (0); //malloc 에러
 	if (init_thread(&table) == -1)
 		return (0); //malloc 에러 or 스레드 생성실패
-	int i = 0;
-	while (i < table.argv[NUM_PHILO])
-	{
-		pthread_join(table.threads[i], NULL);
-		i++;
-	}
+	check_die(&table);
+	return (0);
 }

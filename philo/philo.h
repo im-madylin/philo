@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/07 16:35:07 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/08 15:21:54 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #define RIGHT 1
 #define UNLOCK 0
 #define LOCK 1
-#define DEAD 0
+#define DIE 0
 #define LIVE 1
 #define START 0
 #define RECENT 1
