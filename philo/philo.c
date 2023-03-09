@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/08 19:48:55 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/09 14:05:31 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ int	check_die(t_table *table)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < table->argv[NUM_PHILO])
-	{
-		pthread_detach(table->threads[i]);
-		i++;
-	}
 	j = 0;
 	while (1)
 	{
@@ -40,6 +34,12 @@ int	check_die(t_table *table)
 			}
 			i++;
 		}
+	}
+	i = 0;
+	while (i < table->argv[NUM_PHILO])
+	{
+		pthread_detach(table->threads[i]);
+		i++;
 	}
 	return (0);
 }

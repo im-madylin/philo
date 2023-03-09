@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/08 19:59:59 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/09 21:40:34 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,23 @@ int	am_i_die(t_philo *philo)
 		return (DIE);
 	}
 	return (LIVE);
+}
+
+int	check_usleep(int sleep)
+{
+	t_time	start;
+	t_time	end;
+	int		diff;
+
+	gettimeofday(&start, NULL);
+	diff = 0;
+	while (diff < sleep)
+	{
+		usleep(sleep - diff);
+		gettimeofday(&end, NULL);
+		diff = ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000);
+	}
+	return (0);
 }
 
 long	get_time_diff(t_philo *philo, int flag)

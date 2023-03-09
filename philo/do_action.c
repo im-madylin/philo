@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/08 19:52:35 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/09 21:41:29 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	do_eat(t_philo *philo)
 	printf("%s%ld %d is eating\n", C_GREN, get_time_diff(philo, START), philo->num);
 
 	gettimeofday(&(philo->recent), NULL);
-	usleep(philo->argv[TIME_EAT]); //usleep 정확도 체크 필요
+	check_usleep(philo->argv[TIME_EAT]);
+	// usleep(philo->argv[TIME_EAT]); //usleep 정확도 체크 필요
 	
 	pthread_mutex_unlock(&philo->forks[LEFT]->mutex);
 	pthread_mutex_unlock(&philo->forks[RIGHT]->mutex);
@@ -58,7 +59,8 @@ int	do_sleep(t_philo *philo)
 	if (am_i_die(philo) == DIE)
 		return (0);
 	printf("%s%ld %d is sleeping\n", C_YLLW, get_time_diff(philo, START), philo->num);
-	usleep(philo->argv[TIME_SLEEP]); //usleep 정확도 체크 필요
+	check_usleep(philo->argv[TIME_SLEEP]);
+	// usleep(philo->argv[TIME_SLEEP]); //usleep 정확도 체크 필요
 	return (1);
 }
 
