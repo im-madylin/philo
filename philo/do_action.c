@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/09 21:41:29 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/10 15:09:17 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	do_action(t_philo *philo)
 {
-	//왜 think 안하는지 확인해보기
 	while (philo->is_live == LIVE)
 	{
 		// printf("-----[%d] left : %d, right : %d\n", philo->num, philo->forks[LEFT]->state, philo->forks[RIGHT]->state);
@@ -35,23 +34,52 @@ int	do_eat(t_philo *philo)
 {
 	if (am_i_die(philo) == DIE)
 		return (0);
-	philo->forks[LEFT]->state = LOCK;
-	philo->forks[RIGHT]->state = LOCK;
-	pthread_mutex_lock(&philo->forks[LEFT]->mutex);
-	pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
-	printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
-	printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+	pick_up_fork(philo);
 	printf("%s%ld %d is eating\n", C_GREN, get_time_diff(philo, START), philo->num);
-
 	gettimeofday(&(philo->recent), NULL);
-	check_usleep(philo->argv[TIME_EAT]);
-	// usleep(philo->argv[TIME_EAT]); //usleep 정확도 체크 필요
-	
-	pthread_mutex_unlock(&philo->forks[LEFT]->mutex);
-	pthread_mutex_unlock(&philo->forks[RIGHT]->mutex);
-	philo->forks[LEFT]->state = UNLOCK;
-	philo->forks[RIGHT]->state = UNLOCK;
+	msleep(philo->argv[TIME_EAT]);
+	put_down_fork(philo);
 	return (1);
+}
+
+void	pick_up_fork(t_philo *philo)
+{
+	if (philo->num / 2 != 0)
+	{
+		philo->forks[LEFT]->state = LOCK;
+		pthread_mutex_lock(&philo->forks[LEFT]->mutex);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		philo->forks[RIGHT]->state = LOCK;
+		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+	}
+	else
+	{
+		philo->forks[RIGHT]->state = LOCK;
+		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		philo->forks[LEFT]->state = LOCK;
+		pthread_mutex_lock(&philo->forks[LEFT]->mutex);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+	}
+}
+
+void	put_down_fork(t_philo *philo)
+{
+	if (philo->num / 2 != 0)
+	{
+		pthread_mutex_unlock(&philo->forks[LEFT]->mutex);
+		philo->forks[LEFT]->state = UNLOCK;
+		pthread_mutex_unlock(&philo->forks[RIGHT]->mutex);
+		philo->forks[RIGHT]->state = UNLOCK;
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->forks[RIGHT]->mutex);
+		philo->forks[RIGHT]->state = UNLOCK;
+		pthread_mutex_unlock(&philo->forks[LEFT]->mutex);
+		philo->forks[LEFT]->state = UNLOCK;
+	}
 }
 
 int	do_sleep(t_philo *philo)
@@ -59,7 +87,7 @@ int	do_sleep(t_philo *philo)
 	if (am_i_die(philo) == DIE)
 		return (0);
 	printf("%s%ld %d is sleeping\n", C_YLLW, get_time_diff(philo, START), philo->num);
-	check_usleep(philo->argv[TIME_SLEEP]);
+	msleep(philo->argv[TIME_SLEEP]);
 	// usleep(philo->argv[TIME_SLEEP]); //usleep 정확도 체크 필요
 	return (1);
 }

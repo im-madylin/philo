@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/09 21:40:45 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/10 15:05:34 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ int	do_action(t_philo *philo);
 int	do_eat(t_philo *philo);
 int	do_sleep(t_philo *philo);
 int	do_think(t_philo *philo);
+void	pick_up_fork(t_philo *philo);
+void	put_down_fork(t_philo *philo);
 
 /* check_state.c */
 int	am_i_die(t_philo *philo);
-int	check_usleep(int sleep);
 long	get_time_diff(t_philo *philo, int flag);
+int	time_to_ms(t_time time);
+int	msleep(int ms);
 
 /* init_struct.c */
 int	init_argv(int argc, char *src[], int argv[][5]);

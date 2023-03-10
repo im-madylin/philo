@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/09 21:40:34 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/10 16:52:57 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,30 @@ int	am_i_die(t_philo *philo)
 	return (LIVE);
 }
 
-int	check_usleep(int sleep)
+int	msleep(int ms)
 {
 	t_time	start;
 	t_time	end;
 	int		diff;
 
-	gettimeofday(&start, NULL);
 	diff = 0;
-	while (diff < sleep)
+	gettimeofday(&start, NULL);
+	while (diff < ms)
 	{
-		usleep(sleep - diff);
+		// usleep((ms - diff) * 1000);
+		usleep(100);
 		gettimeofday(&end, NULL);
-		diff = ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000);
+		diff = time_to_ms(end) - time_to_ms(start);
 	}
 	return (0);
+}
+
+int	time_to_ms(t_time time)
+{
+	const time_t sec_to_ms = time.tv_sec * 1000;
+	const suseconds_t usec_to_ms = time.tv_usec / 1000;
+	
+	return (sec_to_ms + usec_to_ms);
 }
 
 long	get_time_diff(t_philo *philo, int flag)
@@ -49,13 +58,15 @@ long	get_time_diff(t_philo *philo, int flag)
 	gettimeofday(&cur, NULL);
 	if (flag == START)
 	{
-		return (((cur.tv_sec - philo->start->tv_sec) * 1000) + \
-		((cur.tv_usec - philo->start->tv_usec) / 1000));
+		return (time_to_ms(cur) - time_to_ms(*(philo->start)));
+		// return (((cur.tv_sec - philo->start->tv_sec) * 1000) + \
+		// ((cur.tv_usec - philo->start->tv_usec) / 1000));
 	}
 	else if (flag == RECENT)
 	{
-		return (((cur.tv_sec - philo->recent.tv_sec) * 1000) + \
-		((cur.tv_usec - philo->recent.tv_usec) / 1000));
+		return (time_to_ms(cur) - time_to_ms(philo->recent));
+		// return (((cur.tv_sec - philo->recent.tv_sec) * 1000) + \
+		// ((cur.tv_usec - philo->recent.tv_usec) / 1000));
 	}
 	return (0);
 }
