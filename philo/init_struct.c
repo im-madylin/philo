@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 13:52:37 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 15:01:52 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	init_fork(t_table *table)
 {
 	int		i;
 
-	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->argv[NUM_PHILO]);
+	table->forks = (t_fork *)malloc(sizeof(t_fork) * (table->argv[NUM_PHILO] + 1));
 	if (table->forks == NULL)
 		return (-1); //table ㅎㅐ제 해야함
-	i = 0;
-	while (i < table->argv[NUM_PHILO])
+	i = 1;
+	while (i <= table->argv[NUM_PHILO])
 	{
 		if (pthread_mutex_init(&(table->forks[i].mutex), NULL) != 0)
 			return (safe_free((void **)&table->forks, -1));
@@ -65,20 +65,21 @@ int	init_philo(t_table *table)
 	int		i;
 
 	num_philo = table->argv[NUM_PHILO];
-	table->philos = (t_philo *)malloc(sizeof(t_philo) * num_philo);
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * (num_philo + 1));
 	if (table->philos == NULL)
 		return (-1); //forks 를 여기서 free?
-	i = 0;
-	while (i < num_philo)
+	table->is_live = LIVE;
+	i = 1;
+	while (i <= num_philo)
 	{
 		philo = (table->philos + i);
 		philo->num = i;
-		philo->is_live = LIVE;
+		philo->is_live = &(table->is_live);
 		// philo->forks[LEFT] = &(table->forks[table->argv[NUM_PHILO] - i - 1]);
 		// philo->forks[RIGHT] = &(table)->forks[i];
 		philo->forks[LEFT] = &(table)->forks[i];
-		if (i == num_philo - 1)
-			philo->forks[RIGHT] = &(table)->forks[0];
+		if (i == num_philo)
+			philo->forks[RIGHT] = &(table)->forks[1];
 		else
 			philo->forks[RIGHT] = &(table)->forks[i + 1];
 		philo->argv = table->argv;
@@ -93,14 +94,13 @@ int	init_thread(t_table *table)
 {
 	int	i;
 
-	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * table->argv[NUM_PHILO]);
+	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * (table->argv[NUM_PHILO] + 1));
 	if (table->threads == NULL)
 		return (-1); //fork, philo ㅇㅕ기서 free?
-	i = 0;
-	while (i < table->argv[NUM_PHILO])
+	i = 1;
+	while (i <= table->argv[NUM_PHILO])
 	{
-		if (pthread_create(&(table->threads[i]), NULL, (void *)do_action, &(table->philos[i])) != 0)
-			return (-1); // 기존 스레드 종료? 리턴값 고민해보기
+		pthread_create(&(table->threads[i]), NULL, (void *)do_action, &(table->philos[i]));
 		i++;
 	}
 	return (0);

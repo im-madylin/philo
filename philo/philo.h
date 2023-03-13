@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/10 15:05:34 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 16:25:00 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int			num;
-	int			is_live;
+	int			*is_live;
 	t_fork		*forks[2];
 	int			*argv;
 	t_time		*start;
@@ -62,6 +62,7 @@ typedef	struct s_table
 	t_fork		*forks;
 	int			argv[5];
 	t_time		start;
+	int			is_live;
 }	t_table;
 
 /* philo.c */
@@ -76,6 +77,7 @@ void	put_down_fork(t_philo *philo);
 
 /* check_state.c */
 int	am_i_die(t_philo *philo);
+int	are_you_die(t_philo *philo);
 long	get_time_diff(t_philo *philo, int flag);
 int	time_to_ms(t_time time);
 int	msleep(int ms);
