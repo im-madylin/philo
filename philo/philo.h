@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 16:25:00 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 17:11:42 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	put_down_fork(t_philo *philo);
 /* check_state.c */
 int	am_i_die(t_philo *philo);
 int	are_you_die(t_philo *philo);
-long	get_time_diff(t_philo *philo, int flag);
+long	get_time_diff(t_time start);
 int	time_to_ms(t_time time);
 int	msleep(int ms);
 

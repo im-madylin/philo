@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 16:25:39 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 17:14:11 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	do_action(t_philo *philo)
 			return (0);
 		if (do_sleep(philo) == 0)
 			return (0);
-		usleep(500);
+		usleep(300);
 	}
 	return (0);
 }
@@ -37,7 +37,7 @@ int	do_eat(t_philo *philo)
 	pick_up_fork(philo);
 	if (am_i_die(philo) == DIE)
 		return (0);
-	printf("%s%ld %d is eating\n", C_GREN, get_time_diff(philo, START), philo->num);
+	printf("%s%ld %d is eating\n", C_GREN, get_time_diff(*(philo->start)), philo->num);
 	gettimeofday(&(philo->recent), NULL);
 	msleep(philo->argv[TIME_EAT]);
 	put_down_fork(philo);
@@ -52,12 +52,12 @@ void	pick_up_fork(t_philo *philo)
 			return ;
 		philo->forks[LEFT]->state = LOCK;
 		pthread_mutex_lock(&philo->forks[LEFT]->mutex);
-		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(*(philo->start)), philo->num);
 		if (am_i_die(philo) == DIE)
 			return ;
 		philo->forks[RIGHT]->state = LOCK;
 		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
-		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(*(philo->start)), philo->num);
 	}
 	else
 	{
@@ -65,12 +65,12 @@ void	pick_up_fork(t_philo *philo)
 			return ;
 		philo->forks[RIGHT]->state = LOCK;
 		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
-		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(*(philo->start)), philo->num);
 		if (am_i_die(philo) == DIE)
 			return ;
 		philo->forks[LEFT]->state = LOCK;
 		pthread_mutex_lock(&philo->forks[LEFT]->mutex);
-		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(philo, START), philo->num);
+		printf("%s%ld %d has taken a fork\n", C_NRML, get_time_diff(*(philo->start)), philo->num);
 	}
 }
 
@@ -96,9 +96,8 @@ int	do_sleep(t_philo *philo)
 {
 	if (am_i_die(philo) == DIE)
 		return (0);
-	printf("%s%ld %d is sleeping\n", C_YLLW, get_time_diff(philo, START), philo->num);
+	printf("%s%ld %d is sleeping\n", C_YLLW, get_time_diff(*(philo->start)), philo->num);
 	msleep(philo->argv[TIME_SLEEP]);
-	// usleep(philo->argv[TIME_SLEEP]); //usleep 정확도 체크 필요
 	return (1);
 }
 
@@ -106,12 +105,12 @@ int	do_think(t_philo *philo)
 {
 	if (am_i_die(philo) == DIE)
 		return (0);
-	printf("%s%ld %d is thinking\n", C_BLUE, get_time_diff(philo, START), philo->num);
+	printf("%s%ld %d is thinking\n", C_BLUE, get_time_diff(*(philo->start)), philo->num);
 	while (!(philo->forks[LEFT]->state == UNLOCK && philo->forks[RIGHT]->state == UNLOCK))
 	{
 		if (am_i_die(philo) == DIE)
 			return (0);
-		usleep(500);
+		usleep(300);
 	}
 	return (1);
 }
