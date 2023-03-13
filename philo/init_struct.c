@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 15:01:52 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:10:14 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,16 @@ int	init_fork(t_table *table)
 	i = 1;
 	while (i <= table->argv[NUM_PHILO])
 	{
-		if (pthread_mutex_init(&(table->forks[i].mutex), NULL) != 0)
-			return (safe_free((void **)&table->forks, -1));
+		pthread_mutex_init(&(table->forks[i].mutex), NULL);
 		table->forks[i].state = UNLOCK;
 		i++;
 	}
 	return (0);
+}
+
+void	init_print(t_table *table)
+{
+	pthread_mutex_init(&(table->print), NULL);
 }
 
 int	init_philo(t_table *table)
@@ -75,8 +79,6 @@ int	init_philo(t_table *table)
 		philo = (table->philos + i);
 		philo->num = i;
 		philo->is_live = &(table->is_live);
-		// philo->forks[LEFT] = &(table->forks[table->argv[NUM_PHILO] - i - 1]);
-		// philo->forks[RIGHT] = &(table)->forks[i];
 		philo->forks[LEFT] = &(table)->forks[i];
 		if (i == num_philo)
 			philo->forks[RIGHT] = &(table)->forks[1];
@@ -85,6 +87,7 @@ int	init_philo(t_table *table)
 		philo->argv = table->argv;
 		philo->start = &(table->start);
 		philo->recent = table->start;
+		philo->print = &(table->print);
 		i++;
 	}
 	return (0);

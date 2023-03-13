@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:14:11 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/01 17:30:30 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:21:08 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,21 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (count);
+}
+
+void	print_message(t_philo *philo, int flag)
+{
+	long	time;
+
+	pthread_mutex_lock(philo->print);
+	time = get_time_diff(*(philo->start));
+	if (flag == FORK)
+		printf("%s%ld %d has taken a fork\n", C_NRML, time, philo->num);
+	else if (flag == EAT)
+		printf("%s%ld %d is eating\n", C_GREN, time, philo->num);
+	else if (flag == SLEEP)
+		printf("%s%ld %d is sleeping\n", C_YLLW, time, philo->num);
+	else if (flag == THINK)
+		printf("%s%ld %d is thinking\n", C_BLUE, time, philo->num);
+	pthread_mutex_unlock(philo->print);
 }
