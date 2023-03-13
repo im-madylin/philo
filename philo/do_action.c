@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/10 15:09:17 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:38:00 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	do_action(t_philo *philo)
 {
+	if (philo->num % 2 != 0)
+		msleep(100);
 	while (philo->is_live == LIVE)
 	{
 		// printf("-----[%d] left : %d, right : %d\n", philo->num, philo->forks[LEFT]->state, philo->forks[RIGHT]->state);
@@ -44,7 +46,7 @@ int	do_eat(t_philo *philo)
 
 void	pick_up_fork(t_philo *philo)
 {
-	if (philo->num / 2 != 0)
+	if (philo->num % 2 != 0)
 	{
 		philo->forks[LEFT]->state = LOCK;
 		pthread_mutex_lock(&philo->forks[LEFT]->mutex);
