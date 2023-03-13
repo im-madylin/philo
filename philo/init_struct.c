@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/07 16:35:18 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:10:16 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,26 @@ int	init_fork(t_table *table)
 int	init_philo(t_table *table)
 {
 	t_philo	*philo;
+	int		num_philo;
 	int		i;
 
-	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->argv[NUM_PHILO]);
+	num_philo = table->argv[NUM_PHILO];
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * num_philo);
 	if (table->philos == NULL)
 		return (-1); //forks 를 여기서 free?
 	i = 0;
-	while (i < table->argv[NUM_PHILO])
+	while (i < num_philo)
 	{
 		philo = (table->philos + i);
 		philo->num = i;
 		philo->is_live = LIVE;
-		philo->forks[LEFT] = &(table->forks[table->argv[NUM_PHILO] - i - 1]);
-		philo->forks[RIGHT] = &(table)->forks[i];
+		// philo->forks[LEFT] = &(table->forks[table->argv[NUM_PHILO] - i - 1]);
+		// philo->forks[RIGHT] = &(table)->forks[i];
+		philo->forks[LEFT] = &(table)->forks[i];
+		if (i == num_philo - 1)
+			philo->forks[RIGHT] = &(table)->forks[0];
+		else
+			philo->forks[RIGHT] = &(table)->forks[i + 1];
 		philo->argv = table->argv;
 		philo->start = &(table->start);
 		philo->recent = table->start;
