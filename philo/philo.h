@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 20:25:00 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/14 20:02:55 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ typedef	struct s_table
 int		do_action(t_philo *philo);
 int		do_think(t_philo *philo);
 int		do_eat(t_philo *philo);
-int		pick_up_fork(t_philo *philo);
+void	pick_up_fork(t_philo *philo);
 int		do_sleep(t_philo *philo);
 
 /* do_action2.c */
-int		pick_up_left_fork(t_philo *philo);
-int		pick_up_right_fork(t_philo *philo);
+void	pick_up_left_fork(t_philo *philo);
+void	pick_up_right_fork(t_philo *philo);
 void	pick_down_left_fork(t_philo *philo);
 void	pick_down_right_fork(t_philo *philo);
 void	put_down_fork(t_philo *philo);
@@ -97,6 +97,7 @@ int		msleep(int ms);
 /* init_struct.c */
 int		init_argv(int argc, char *src[], int argv[][5]);
 int		init_fork(t_table *table);
+void	init_print(t_table *table);
 int		init_philo(t_table *table);
 int		init_thread(t_table *table);
 

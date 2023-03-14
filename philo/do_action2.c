@@ -6,30 +6,31 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:20:09 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 20:21:53 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/14 20:12:06 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	pick_up_left_fork(t_philo *philo)
+void	pick_up_left_fork(t_philo *philo)
 {
 	if (am_i_die(philo) == DIE)
-		return (0);
+		return ;
 	philo->forks[LEFT]->state = LOCK;
 	pthread_mutex_lock(&philo->forks[LEFT]->mutex);
 	print_message(philo, FORK);
-	return (1);
 }
 
-int	pick_up_right_fork(t_philo *philo)
+void	pick_up_right_fork(t_philo *philo)
 {
 	if (am_i_die(philo) == DIE)
-		return (0);
-	philo->forks[RIGHT]->state = LOCK;
-	pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
-	print_message(philo, FORK);
-	return (1);
+		return ;
+	if (philo->forks[RIGHT]->state != LOCK)
+	{
+		philo->forks[RIGHT]->state = LOCK;
+		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
+		print_message(philo, FORK);
+	}
 }
 
 void	put_down_fork(t_philo *philo)
