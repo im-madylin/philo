@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 19:31:22 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 20:24:28 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	do_eat(t_philo *philo)
 	}
 	print_message(philo, EAT);
 	// philo->eat_info->count++;
-	add_eat_count(philo);
 	gettimeofday(&(philo->recent_time), NULL);
 	msleep(philo->argv[TIME_EAT]);
+	add_eat_count(philo);
 	put_down_fork(philo);
 	return (1);
 }

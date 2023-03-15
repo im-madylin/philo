@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 19:24:49 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 20:21:54 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,38 @@ int	are_you_die(t_philo *philo, int argv[])
 	return (LIVE);
 }
 
-int	check_eat_enough(t_philo *philo)
+int	check_eat_enough(t_table *table)
 {
-	if (check_eat_count(philo) == TRUE)
+	if (check_eat_count(table) == TRUE)
 	{
-		pthread_mutex_lock(&(philo->live->mutex));
-		philo->live->is_live = DIE;
-		pthread_mutex_unlock(&(philo->live->mutex));
+		pthread_mutex_lock(&(table->philos[1].live->mutex));
+		table->philos[1].live->is_live = DIE;
+		pthread_mutex_unlock(&(table->philos[1].live->mutex));
 		return (TRUE);
 	}
 	else
 		return (FALSE);
 }
 
-int	check_eat_count(t_philo *philo)
+int	check_eat_count(t_table *table)
 {
+	t_philo	philo;
 	int	is_enough;
+	int	i;
 
-	is_enough = FALSE;
-	if (philo->argv[MUST_EAT] == 0)
+	if (table->argv[MUST_EAT] == 0)
 		return (FALSE);
-	pthread_mutex_lock(&(philo->eat_info.mutex));
-	if (philo->eat_info.count >= philo->argv[MUST_EAT])
-		is_enough = TRUE;
-	pthread_mutex_unlock(&(philo->eat_info.mutex));
+	is_enough = TRUE;
+	i = 1;
+	while (i <= table->argv[NUM_PHILO])
+	{
+		philo = table->philos[i];
+		pthread_mutex_lock(&(philo.eat_info.mutex));
+		if (philo.eat_info.count < philo.argv[MUST_EAT])
+			is_enough = FALSE;
+		// printf("-----%d : %d-----\n", philo.num, philo.eat_info.count);
+		pthread_mutex_unlock(&(philo.eat_info.mutex));
+		i++;
+	}
 	return (is_enough);
 }

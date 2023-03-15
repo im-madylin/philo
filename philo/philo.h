@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 19:25:54 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 20:12:14 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_live
 typedef struct	s_eat
 {
 	t_mutex	mutex;
-	// t_time	recent_time;
 	int	count;
 }	t_eat;
 
@@ -105,8 +104,8 @@ void	unlock_the_fork(t_philo *philo, int flag);
 
 /* check_state.c */
 int		are_you_die(t_philo *philo, int argv[]);
-int		check_eat_enough(t_philo *philo);
-int		check_eat_count(t_philo *philo);
+int		check_eat_enough(t_table *table);
+int		check_eat_count(t_table *table);
 
 /* check_state2.c */
 int		am_i_die(t_philo *philo);
