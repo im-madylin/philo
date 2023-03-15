@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:14:11 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 20:21:08 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 17:51:20 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,15 @@ void	print_message(t_philo *philo, int flag)
 	long	time;
 
 	pthread_mutex_lock(philo->print);
-	time = get_time_diff(*(philo->start));
+	pthread_mutex_lock(&(philo->live->mutex));
+	if (philo->live->is_live == DIE)
+	{
+		pthread_mutex_unlock(&(philo->live->mutex));
+		pthread_mutex_unlock(philo->print);
+		return ;
+	}
+	pthread_mutex_unlock(&(philo->live->mutex));
+	time = get_time_diff(*(philo->start_time));
 	if (flag == FORK)
 		printf("%s%ld %d has taken a fork\n", C_NRML, time, philo->num);
 	else if (flag == EAT)
