@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 18:00:04 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 20:35:43 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	init_argv(int argc, char *src[], int argv[][5])
 	while (i < argc)
 	{
 		if (src[i][0] == '-' || ft_strlen(src[i]) > 10)
-			return (0);
+			return (FALSE);
 		tmp[j] = ft_atoi(src[i]);
 		if (tmp[j] == 0 || tmp[j] > INT_MAX)
-			return (0);
+			return (FALSE);
 		i++;
 		j++;
 	}
@@ -46,7 +46,7 @@ int	init_fork(t_table *table)
 
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * (table->argv[NUM_PHILO] + 1));
 	if (table->forks == NULL)
-		return (-1); //table ㅎㅐ제 해야함
+		return (FALSE);
 	i = 1;
 	while (i <= table->argv[NUM_PHILO])
 	{
@@ -54,7 +54,7 @@ int	init_fork(t_table *table)
 		table->forks[i].state = UNLOCK;
 		i++;
 	}
-	return (0);
+	return (TRUE);
 }
 
 void	init_print_live(t_table *table)
@@ -73,7 +73,7 @@ int	init_philo(t_table *table)
 	num_philo = table->argv[NUM_PHILO];
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * (num_philo + 1));
 	if (table->philos == NULL)
-		return (-1); //forks 를 여기서 free?
+		return (FALSE);
 	i = 1;
 	while (i <= num_philo)
 	{
@@ -93,7 +93,7 @@ int	init_philo(t_table *table)
 		philo->print = &(table->print);
 		i++;
 	}
-	return (0);
+	return (TRUE);
 }
 
 int	init_thread(t_table *table)
@@ -102,12 +102,12 @@ int	init_thread(t_table *table)
 
 	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * (table->argv[NUM_PHILO] + 1));
 	if (table->threads == NULL)
-		return (-1); //fork, philo ㅇㅕ기서 free?
+		return (FALSE);
 	i = 1;
 	while (i <= table->argv[NUM_PHILO])
 	{
 		pthread_create(&(table->threads[i]), NULL, (void *)do_action, &(table->philos[i]));
 		i++;
 	}
-	return (0);
+	return (TRUE);
 }

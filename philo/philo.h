@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 20:12:14 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 20:35:13 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ int		init_thread(t_table *table);
 /* utils.c */
 int		ft_atoi(const char *str);
 void	*ft_malloc(size_t size);
-int		safe_free(void **ptr, int result);
+int		safe_free(void **ptr);
 size_t	ft_strlen(const char *s);
 void	print_message(t_philo *philo, int flag);
