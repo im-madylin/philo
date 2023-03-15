@@ -6,30 +6,35 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:20:09 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/14 20:12:06 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 16:28:45 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	pick_up_left_fork(t_philo *philo)
+void	lock_the_fork(t_philo *philo, int flag)
 {
-	if (am_i_die(philo) == DIE)
-		return ;
-	philo->forks[LEFT]->state = LOCK;
-	pthread_mutex_lock(&philo->forks[LEFT]->mutex);
-	print_message(philo, FORK);
-}
+	t_fork	*forks;
 
-void	pick_up_right_fork(t_philo *philo)
-{
-	if (am_i_die(philo) == DIE)
-		return ;
-	if (philo->forks[RIGHT]->state != LOCK)
+	forks = philo->forks[LEFT];
+	if (flag == RIGHT)
+		forks = philo->forks[RIGHT];
+	while (1)
 	{
-		philo->forks[RIGHT]->state = LOCK;
-		pthread_mutex_lock(&philo->forks[RIGHT]->mutex);
-		print_message(philo, FORK);
+		if (am_i_die(philo) == DIE)
+			return ;
+		pthread_mutex_lock(&forks->mutex);
+		if (forks->state == UNLOCK)
+		{
+			forks->state = LOCK;
+			print_message(philo, FORK);
+			pthread_mutex_unlock(&forks->mutex);
+			return ;
+		}
+		else
+		{
+			pthread_mutex_unlock(&forks->mutex);
+		}
 	}
 }
 
@@ -37,24 +42,32 @@ void	put_down_fork(t_philo *philo)
 {
 	if (philo->num % 2 != 0)
 	{
-		pick_down_left_fork(philo);
-		pick_down_right_fork(philo);
+		unlock_the_fork(philo, LEFT);
+		unlock_the_fork(philo, RIGHT);
 	}
 	else
 	{
-		pick_down_right_fork(philo);
-		pick_down_left_fork(philo);
+		unlock_the_fork(philo, RIGHT);
+		unlock_the_fork(philo, LEFT);
 	}
 }
 
-void	pick_down_left_fork(t_philo *philo)
+void	unlock_the_fork(t_philo *philo, int flag)
 {
-	pthread_mutex_unlock(&philo->forks[LEFT]->mutex);
-	philo->forks[LEFT]->state = UNLOCK;
-}
+	t_fork	*forks;
 
-void	pick_down_right_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(&philo->forks[RIGHT]->mutex);
-	philo->forks[RIGHT]->state = UNLOCK;
+	forks = philo->forks[LEFT];
+	if (flag == RIGHT)
+		forks = philo->forks[RIGHT];
+	if (am_i_die(philo) == DIE)
+		return ;
+	pthread_mutex_lock(&forks->mutex);
+	if (forks->state == LOCK)
+	{
+		forks->state = UNLOCK;
+		pthread_mutex_unlock(&forks->mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&forks->mutex);
+	// else 인 경우가 있나?
 }

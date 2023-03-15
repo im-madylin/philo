@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 19:15:16 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 16:04:47 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 int	am_i_die(t_philo *philo)
 {
-	if (*(philo->is_live) == DIE)
-		return (DIE);
-	return (LIVE);
+	int	state;
+
+	pthread_mutex_lock(&(philo->live->mutex));
+	state = philo->live->is_live;
+	pthread_mutex_unlock(&(philo->live->mutex));
+	return (state);
 }
 
-int	are_you_die(t_philo *philo)
+int	are_you_die(t_philo *philo, int argv[])
 {
-	if (get_time_diff(philo->recent) > philo->argv[TIME_DIE])
+	if (get_time_diff(philo->recent) > argv[TIME_DIE])
 	{
-		*(philo->is_live) = DIE;
+		pthread_mutex_lock(&(philo->live->mutex));
+		philo->live->is_live = DIE;
 		printf("%s%ld %d died\n", C_RED, get_time_diff(*(philo->start)), philo->num);
+		pthread_mutex_unlock(&(philo->live->mutex));
 		return (DIE);
 	}
 	return (LIVE);

@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/14 20:02:55 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 16:05:01 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #define LIVE 1
 #define START 0
 #define RECENT 1
+#define FALSE 0
+#define	TRUE 1
 #define NUM_PHILO 0
 #define TIME_DIE 1
 #define TIME_EAT 2
@@ -49,10 +51,17 @@ typedef struct s_fork
 	int		state;
 }	t_fork;
 
+typedef struct s_live
+{
+	t_mutex	mutex;
+	int	is_live;
+}	t_live;
+
 typedef struct s_philo
 {
 	int			num;
-	int			*is_live;
+	// int			*is_live;
+	t_live		*live;
 	t_fork		*forks[2];
 	int			*argv;
 	t_time		*start;
@@ -67,7 +76,8 @@ typedef	struct s_table
 	t_fork		*forks;
 	int			argv[5];
 	t_time		start;
-	int			is_live;
+	// int			is_live;
+	t_live		live;
 	t_mutex		print;
 }	t_table;
 
@@ -81,15 +91,13 @@ void	pick_up_fork(t_philo *philo);
 int		do_sleep(t_philo *philo);
 
 /* do_action2.c */
-void	pick_up_left_fork(t_philo *philo);
-void	pick_up_right_fork(t_philo *philo);
-void	pick_down_left_fork(t_philo *philo);
-void	pick_down_right_fork(t_philo *philo);
+void	lock_the_fork(t_philo *philo, int flag);
 void	put_down_fork(t_philo *philo);
+void	unlock_the_fork(t_philo *philo, int flag);
 
 /* check_state.c */
 int		am_i_die(t_philo *philo);
-int		are_you_die(t_philo *philo);
+int		are_you_die(t_philo *philo, int argv[]);
 long	get_time_diff(t_time start);
 int		time_to_ms(t_time time);
 int		msleep(int ms);
@@ -97,6 +105,7 @@ int		msleep(int ms);
 /* init_struct.c */
 int		init_argv(int argc, char *src[], int argv[][5]);
 int		init_fork(t_table *table);
+void	init_print_live(t_table *table);
 void	init_print(t_table *table);
 int		init_philo(t_table *table);
 int		init_thread(t_table *table);

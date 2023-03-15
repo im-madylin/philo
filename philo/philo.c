@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 20:27:14 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 16:05:15 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,18 @@ int	check_die(t_table *table)
 		i = 1;
 		while (i <= table->argv[NUM_PHILO])
 		{
-			if (are_you_die(&(table->philos[i])) == DIE)
+			if (are_you_die(&(table->philos[i]), table->argv) == DIE)
 			{
 				i = 1;
 				while (i <= table->argv[NUM_PHILO])
 				{
 					pthread_join(table->threads[i], NULL);
+					i++;
+				}
+				i = 1;
+				while (i <= table->argv[NUM_PHILO])
+				{
+					pthread_mutex_destroy(&(table->forks->mutex));
 					i++;
 				}
 				return (0);
@@ -50,6 +56,7 @@ int	main(int argc, char *argv[])
 		return (0); //유효하지 않은 인자 에러
 	if (init_fork(&table) == -1)
 		return (0); //malloc 에러
+	init_print_live(&table);
 	if (init_philo(&table) == -1)
 		return (0); //malloc 에러
 	gettimeofday(&(table.start), NULL);

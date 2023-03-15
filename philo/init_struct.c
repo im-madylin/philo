@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/13 20:10:14 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 15:01:56 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ int	init_fork(t_table *table)
 	return (0);
 }
 
-void	init_print(t_table *table)
+void	init_print_live(t_table *table)
 {
 	pthread_mutex_init(&(table->print), NULL);
+	pthread_mutex_init(&(table->live.mutex), NULL);
+	table->live.is_live = LIVE;
 }
 
 int	init_philo(t_table *table)
@@ -72,13 +74,12 @@ int	init_philo(t_table *table)
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * (num_philo + 1));
 	if (table->philos == NULL)
 		return (-1); //forks 를 여기서 free?
-	table->is_live = LIVE;
 	i = 1;
 	while (i <= num_philo)
 	{
 		philo = (table->philos + i);
 		philo->num = i;
-		philo->is_live = &(table->is_live);
+		philo->live = &(table->live);
 		philo->forks[LEFT] = &(table)->forks[i];
 		if (i == num_philo)
 			philo->forks[RIGHT] = &(table)->forks[1];

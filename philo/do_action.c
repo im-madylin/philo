@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/14 20:06:21 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 15:20:41 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	do_action(t_philo *philo)
 {
 	if (philo->num % 2 == 0)
 		msleep(100);
-	while (*(philo->is_live) == LIVE)
+	while (am_i_die(philo) == LIVE)
 	{
 		if (do_think(philo) == 0)
 			return (0);
@@ -43,10 +43,10 @@ int	do_eat(t_philo *philo)
 	pick_up_fork(philo);
 	if (am_i_die(philo) == DIE)
 	{
-		if (philo->forks[LEFT]->state == LOCK)
-			pthread_mutex_unlock(&(philo->forks[LEFT]->mutex));
-		if (philo->forks[RIGHT]->state == LOCK)
-			pthread_mutex_unlock(&(philo->forks[RIGHT]->mutex));
+		// if (philo->forks[LEFT]->state == LOCK)
+		// 	pthread_mutex_unlock(&(philo->forks[LEFT]->mutex));
+		// if (philo->forks[RIGHT]->state == LOCK)
+		// 	pthread_mutex_unlock(&(philo->forks[RIGHT]->mutex));
 		return (0);
 	}
 	print_message(philo, EAT);
@@ -60,13 +60,13 @@ void	pick_up_fork(t_philo *philo)
 {
 	if (philo->num % 2 != 0)
 	{
-		pick_up_left_fork(philo);
-		pick_up_right_fork(philo);
+		lock_the_fork(philo, LEFT);
+		lock_the_fork(philo, RIGHT);
 	}
 	else
 	{
-		pick_up_right_fork(philo);
-		pick_up_left_fork(philo);
+		lock_the_fork(philo, RIGHT);
+		lock_the_fork(philo, LEFT);
 	}
 }
 
