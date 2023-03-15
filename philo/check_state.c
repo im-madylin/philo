@@ -6,21 +6,11 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 18:00:17 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 19:24:49 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	am_i_die(t_philo *philo)
-{
-	int	state;
-
-	pthread_mutex_lock(&(philo->live->mutex));
-	state = philo->live->is_live;
-	pthread_mutex_unlock(&(philo->live->mutex));
-	return (state);
-}
 
 int	are_you_die(t_philo *philo, int argv[])
 {
@@ -35,36 +25,29 @@ int	are_you_die(t_philo *philo, int argv[])
 	return (LIVE);
 }
 
-int	msleep(int ms)
+int	check_eat_enough(t_philo *philo)
 {
-	t_time	start;
-	t_time	end;
-	int		diff;
-
-	diff = 0;
-	gettimeofday(&start, NULL);
-	while (diff < ms)
+	if (check_eat_count(philo) == TRUE)
 	{
-		// usleep((ms - diff) * 1000);
-		usleep(100);
-		gettimeofday(&end, NULL);
-		diff = time_to_ms(end) - time_to_ms(start);
+		pthread_mutex_lock(&(philo->live->mutex));
+		philo->live->is_live = DIE;
+		pthread_mutex_unlock(&(philo->live->mutex));
+		return (TRUE);
 	}
-	return (0);
+	else
+		return (FALSE);
 }
 
-int	time_to_ms(t_time time)
+int	check_eat_count(t_philo *philo)
 {
-	const time_t sec_to_ms = time.tv_sec * 1000;
-	const suseconds_t usec_to_ms = time.tv_usec / 1000;
-	
-	return (sec_to_ms + usec_to_ms);
-}
+	int	is_enough;
 
-long	get_time_diff(t_time start)
-{
-	t_time	cur;
-
-	gettimeofday(&cur, NULL);
-	return (time_to_ms(cur) - time_to_ms(start));
+	is_enough = FALSE;
+	if (philo->argv[MUST_EAT] == 0)
+		return (FALSE);
+	pthread_mutex_lock(&(philo->eat_info.mutex));
+	if (philo->eat_info.count >= philo->argv[MUST_EAT])
+		is_enough = TRUE;
+	pthread_mutex_unlock(&(philo->eat_info.mutex));
+	return (is_enough);
 }

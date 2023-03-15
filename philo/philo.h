@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 18:07:20 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 19:25:54 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,12 @@ typedef struct	s_eat
 typedef struct s_philo
 {
 	int			num;
-	// int			*is_live;
 	t_live		*live;
 	t_fork		*forks[2];
 	int			*argv;
 	t_time		*start_time;
 	t_eat		eat_info;
 	t_time		recent_time;
-	// int			eat_count;
 	t_mutex		*print;
 }	t_philo;
 
@@ -85,40 +83,41 @@ typedef	struct s_table
 	t_fork		*forks;
 	int			argv[5];
 	t_time		start_time;
-	// int			is_live;
 	t_live		live;
 	t_mutex		print;
 }	t_table;
 
 /* philo.c */
-int	check_eat_enough(t_philo *philo);
-int	check_eat_count(t_philo *philo);
+int		check_die(t_table *table);
 
 /* do_action.c */
 int		do_action(t_philo *philo);
 int		do_think(t_philo *philo);
 int		do_eat(t_philo *philo);
-void	pick_up_fork(t_philo *philo);
+void	add_eat_count(t_philo *philo);
 int		do_sleep(t_philo *philo);
-void	plus_eat_count(t_philo *philo);
 
 /* do_action2.c */
+void	pick_up_fork(t_philo *philo);
 void	lock_the_fork(t_philo *philo, int flag);
 void	put_down_fork(t_philo *philo);
 void	unlock_the_fork(t_philo *philo, int flag);
 
 /* check_state.c */
-int		am_i_die(t_philo *philo);
 int		are_you_die(t_philo *philo, int argv[]);
+int		check_eat_enough(t_philo *philo);
+int		check_eat_count(t_philo *philo);
+
+/* check_state2.c */
+int		am_i_die(t_philo *philo);
+int		msleep(int ms);
 long	get_time_diff(t_time start_time);
 int		time_to_ms(t_time time);
-int		msleep(int ms);
 
 /* init_struct.c */
 int		init_argv(int argc, char *src[], int argv[][5]);
 int		init_fork(t_table *table);
 void	init_print_live(t_table *table);
-void	init_print(t_table *table);
 int		init_philo(t_table *table);
 int		init_thread(t_table *table);
 

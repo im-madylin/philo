@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 18:09:16 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 19:24:54 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	check_die(t_table *table)
 		i = 1;
 		while (i <= table->argv[NUM_PHILO])
 		{
-			if (are_you_die(&(table->philos[i]), table->argv) == DIE || check_eat_enough(&(table->philos[i])) == TRUE)
+			if (are_you_die(&(table->philos[i]), table->argv) == DIE \
+			|| check_eat_enough(&(table->philos[i])) == TRUE)
 			{
 				i = 1;
 				while (i <= table->argv[NUM_PHILO])
@@ -47,34 +48,6 @@ int	check_die(t_table *table)
 	}
 	return (0);
 }
-
-int	check_eat_enough(t_philo *philo)
-{
-	if (check_eat_count(philo) == TRUE)
-	{
-		pthread_mutex_lock(&(philo->live->mutex));
-		philo->live->is_live = DIE;
-		pthread_mutex_unlock(&(philo->live->mutex));
-		return (TRUE);
-	}
-	else
-		return (FALSE);
-}
-
-int	check_eat_count(t_philo *philo)
-{
-	int	is_enough;
-
-	is_enough = FALSE;
-	if (philo->argv[MUST_EAT] == 0)
-		return (FALSE);
-	pthread_mutex_lock(&(philo->eat_info.mutex));
-	if (philo->eat_info.count >= philo->argv[MUST_EAT])
-		is_enough = TRUE;
-	pthread_mutex_unlock(&(philo->eat_info.mutex));
-	return (is_enough);
-}
-
 
 int	main(int argc, char *argv[])
 {

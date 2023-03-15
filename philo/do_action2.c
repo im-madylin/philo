@@ -6,11 +6,25 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:20:09 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 17:11:43 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/15 19:19:02 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	pick_up_fork(t_philo *philo)
+{
+	if (philo->num % 2 != 0)
+	{
+		lock_the_fork(philo, LEFT);
+		lock_the_fork(philo, RIGHT);
+	}
+	else
+	{
+		lock_the_fork(philo, RIGHT);
+		lock_the_fork(philo, LEFT);
+	}
+}
 
 void	lock_the_fork(t_philo *philo, int flag)
 {
