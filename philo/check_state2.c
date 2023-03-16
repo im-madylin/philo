@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 19:23:04 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 19:24:28 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:49:16 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ long	get_time_diff(t_time start)
 
 int	time_to_ms(t_time time)
 {
-	const time_t sec_to_ms = time.tv_sec * 1000;
-	const suseconds_t usec_to_ms = time.tv_usec / 1000;
-	
+	time_t		sec_to_ms;
+	suseconds_t	usec_to_ms;
+
+	sec_to_ms = time.tv_sec * 1000;
+	usec_to_ms = time.tv_usec / 1000;
 	return (sec_to_ms + usec_to_ms);
 }

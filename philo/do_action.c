@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 16:44:57 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:44:50 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	do_action(t_philo *philo)
 			return (0);
 		if (do_sleep(philo) == 0)
 			return (0);
-		// usleep(300); //필요할까?
 	}
 	return (0);
 }

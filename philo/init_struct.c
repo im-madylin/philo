@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:22:44 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:55:20 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int	init_argv(int argc, char *src[], int argv[][5])
 
 int	init_fork(t_table *table)
 {
+	int		num_philo;
 	int		i;
 
-	table->forks = (t_fork *)malloc(sizeof(t_fork) * (table->argv[NUM_PHILO] + 1));
+	num_philo = table->argv[NUM_PHILO] + 1;
+	table->forks = (t_fork *)malloc(sizeof(t_fork) * num_philo);
 	if (table->forks == NULL)
 		return (FALSE);
 	i = 1;
@@ -74,38 +76,39 @@ int	init_philo(t_table *table)
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * (num_philo + 1));
 	if (table->philos == NULL)
 		return (FALSE);
-	i = 1;
-	while (i <= num_philo)
+	i = 0;
+	while (++i <= num_philo)
 	{
 		philo = (table->philos + i);
 		philo->num = i;
 		philo->live = &(table->live);
 		philo->forks[LEFT] = &(table)->forks[i];
-		if (i == num_philo)
-			philo->forks[RIGHT] = &(table)->forks[1];
-		else
+		philo->forks[RIGHT] = &(table)->forks[1];
+		if (i != num_philo)
 			philo->forks[RIGHT] = &(table)->forks[i + 1];
 		philo->argv = table->argv;
 		philo->start_time = &(table->start_time);
 		pthread_mutex_init(&(philo->eat_info.mutex), NULL);
 		philo->eat_info.count = 0;
 		philo->print = &(table->print);
-		i++;
 	}
 	return (TRUE);
 }
 
 int	init_thread(t_table *table)
 {
+	int	num_philo;
 	int	i;
 
-	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * (table->argv[NUM_PHILO] + 1));
+	num_philo = table->argv[NUM_PHILO] + 1;
+	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * num_philo);
 	if (table->threads == NULL)
 		return (FALSE);
 	i = 1;
 	while (i <= table->argv[NUM_PHILO])
 	{
-		pthread_create(&(table->threads[i]), NULL, (void *)do_action, &(table->philos[i]));
+		pthread_create(&(table->threads[i]), NULL, \
+		(void *)do_action, &(table->philos[i]));
 		i++;
 	}
 	return (TRUE);

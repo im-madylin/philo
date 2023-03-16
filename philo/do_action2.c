@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:20:09 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:51:40 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:49:33 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,4 @@ void	unlock_the_fork(t_philo *philo, int flag)
 		return ;
 	}
 	pthread_mutex_unlock(&forks->mutex);
-	// else 인 경우가 있나?
 }
