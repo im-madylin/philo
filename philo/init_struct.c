@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:13:06 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:22:44 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	init_philo(t_table *table)
 		philo->start_time = &(table->start_time);
 		pthread_mutex_init(&(philo->eat_info.mutex), NULL);
 		philo->eat_info.count = 0;
-		philo->recent_time = table->start_time;
 		philo->print = &(table->print);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:13:17 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:22:54 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	do_action(t_philo *philo)
 {
+	philo->recent_time = *(philo->start_time);
 	if (philo->num % 2 == 0)
 		msleep(100);
 	while (am_i_die(philo) == LIVE)
