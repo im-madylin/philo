@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:23:10 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 16:22:24 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	are_you_die(t_philo *philo, int argv[])
 		pthread_mutex_unlock(&(philo->live->mutex));
 		return (DIE);
 	}
-	// printf("-----recent : %d, %ld------\n", philo->recent_time, get_time_diff(philo->recent_time));
 	return (LIVE);
 }
 
@@ -53,11 +52,12 @@ int	check_eat_count(t_table *table)
 	{
 		philo = table->philos[i];
 		pthread_mutex_lock(&(philo.eat_info.mutex));
+		// printf("-----%d : %d-----\n", philo.num, philo.eat_info.count);
 		if (philo.eat_info.count < philo.argv[MUST_EAT])
 			is_enough = FALSE;
-		// printf("-----%d : %d-----\n", philo.num, philo.eat_info.count);
 		pthread_mutex_unlock(&(philo.eat_info.mutex));
 		i++;
 	}
+	// printf("------is enough : %d----\n", is_enough);
 	return (is_enough);
 }

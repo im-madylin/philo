@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:22:54 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 16:44:57 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	do_action(t_philo *philo)
 {
 	philo->recent_time = *(philo->start_time);
 	if (philo->num % 2 == 0)
-		msleep(100);
+		msleep(5);
 	while (am_i_die(philo) == LIVE)
 	{
 		if (do_think(philo) == 0)
@@ -25,7 +25,7 @@ int	do_action(t_philo *philo)
 			return (0);
 		if (do_sleep(philo) == 0)
 			return (0);
-		usleep(300); //필요할까?
+		// usleep(300); //필요할까?
 	}
 	return (0);
 }
@@ -37,11 +37,11 @@ int	do_think(t_philo *philo)
 
 	if (am_i_die(philo) == DIE)
 		return (0);
+	print_message(philo, THINK);
 	argv = philo->argv;
 	think_time = argv[TIME_DIE] - (argv[TIME_EAT] + argv[TIME_SLEEP] + 50);
 	if (think_time <= 0)
 		return (1);
-	print_message(philo, THINK);
 	msleep(think_time);
 	return (1);
 }

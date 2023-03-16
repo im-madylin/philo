@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 15:20:57 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:33:46 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		do_sleep(t_philo *philo);
 
 /* do_action2.c */
 void	pick_up_fork(t_philo *philo);
+void	spend_time_when_alone(t_philo *philo);
 void	lock_the_fork(t_philo *philo, int flag);
 void	put_down_fork(t_philo *philo);
 void	unlock_the_fork(t_philo *philo, int flag);

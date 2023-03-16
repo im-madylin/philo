@@ -6,12 +6,12 @@
 #    By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/02 13:41:52 by hahlee            #+#    #+#              #
-#    Updated: 2023/03/15 19:25:42 by hahlee           ###   ########.fr        #
+#    Updated: 2023/03/16 16:02:43 by hahlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
-CFLAGS	= -g3 -Wall -Wextra -Werror -fsanitize=thread
+CFLAGS	= -g3 -Wall -Wextra -Werror
 
 OUTDIR	= out/
 SRCS	= philo.c	init_struct.c	do_action.c	do_action2.c	check_state.c	check_state2.c	utils.c
