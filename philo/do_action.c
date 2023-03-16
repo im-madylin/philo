@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 20:24:28 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:13:17 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,17 @@ int	do_action(t_philo *philo)
 
 int	do_think(t_philo *philo)
 {
+	int	*argv;
+	int	think_time;
+
 	if (am_i_die(philo) == DIE)
 		return (0);
+	argv = philo->argv;
+	think_time = argv[TIME_DIE] - (argv[TIME_EAT] + argv[TIME_SLEEP] + 50);
+	if (think_time <= 0)
+		return (1);
 	print_message(philo, THINK);
-	msleep(philo->argv[TIME_DIE] - (philo->argv[TIME_EAT] + philo->argv[TIME_SLEEP] + 50));
+	msleep(think_time);
 	return (1);
 }
 
@@ -42,15 +49,8 @@ int	do_eat(t_philo *philo)
 {
 	pick_up_fork(philo);
 	if (am_i_die(philo) == DIE)
-	{
-		// if (philo->forks[LEFT]->state == LOCK)
-		// 	pthread_mutex_unlock(&(philo->forks[LEFT]->mutex));
-		// if (philo->forks[RIGHT]->state == LOCK)
-		// 	pthread_mutex_unlock(&(philo->forks[RIGHT]->mutex));
 		return (0);
-	}
 	print_message(philo, EAT);
-	// philo->eat_info->count++;
 	gettimeofday(&(philo->recent_time), NULL);
 	msleep(philo->argv[TIME_EAT]);
 	add_eat_count(philo);

@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:28 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 20:38:12 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:01:22 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	main(int argc, char *argv[])
 		return (0);
 	init_print_live(&table);
 	if (init_philo(&table) == FALSE)
-		return (safe_free(&(table.forks)));
+		return (safe_free((void**)&(table.forks)));
 	gettimeofday(&(table.start_time), NULL);
 	if (init_thread(&table) == FALSE)
-		return (safe_free(&(table.forks)), safe_free(&(table.philos)));
+		return (safe_free((void**)&(table.forks)), safe_free((void**)&(table.philos)));
 	check_die(&table);
-	safe_free(&(table.forks));
-	safe_free(&(table.philos));
-	safe_free(&(table.threads));
+	safe_free((void**)&(table.forks));
+	safe_free((void**)&(table.philos));
+	safe_free((void**)&(table.threads));
 	return (0);
 }

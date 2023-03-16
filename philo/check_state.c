@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 20:21:54 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:13:29 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	are_you_die(t_philo *philo, int argv[])
 		pthread_mutex_unlock(&(philo->live->mutex));
 		return (DIE);
 	}
+	// printf("-----recent : %d, %ld------\n", philo->recent_time, get_time_diff(philo->recent_time));
 	return (LIVE);
 }
 
