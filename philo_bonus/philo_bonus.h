@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 20:45:31 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/17 14:19:02 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <unistd.h>
+# include <semaphore.h>
 
 # define INT_MAX 2147483647
 # define LEFT 0
@@ -45,51 +46,31 @@
 # define C_BLUE "\033[34m"
 # define C_RED "\033[31m"
 
-typedef pthread_mutex_t	t_mutex;
 typedef struct timeval	t_time;
 
-typedef struct s_fork
-{
-	t_mutex	mutex;
-	int		state;
-}	t_fork;
-
-typedef struct s_live
-{
-	t_mutex	mutex;
-	int		is_live;
-}	t_live;
-
-typedef struct s_eat
-{
-	t_mutex	mutex;
-	int		count;
-}	t_eat;
-
-typedef struct s_philo
-{
-	int			num;
-	t_live		*live;
-	t_fork		*forks[2];
-	int			*argv;
-	t_time		*start_time;
-	t_eat		eat_info;
-	t_time		recent_time;
-	t_mutex		*print;
-}	t_philo;
+// typedef struct s_philo
+// {
+// 	int			id;
+// 	int			*argv;
+// 	t_time		*start_time;
+// 	t_eat		eat_info;
+// 	t_time		recent_time;
+// }	t_philo;
 
 typedef struct s_table
 {
-	pthread_t	*threads;
-	t_philo		*philos;
-	t_fork		*forks;
 	int			argv[5];
+	sem_t		*forks;
+	// sem_t		*eat_enough;
 	t_time		start_time;
-	t_live		live;
-	t_mutex		print;
+	t_time		recent_time;
 }	t_table;
 
 /* philo.c */
+
+/* init_struct */
+int	init_argv(int argc, char *src[], int argv[][5]);
+int	init_table(t_table *table);
 
 
 #endif

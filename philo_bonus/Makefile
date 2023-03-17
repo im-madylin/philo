@@ -6,7 +6,7 @@
 #    By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/02 13:41:52 by hahlee            #+#    #+#              #
-#    Updated: 2023/03/16 19:17:00 by hahlee           ###   ########.fr        #
+#    Updated: 2023/03/17 14:19:52 by hahlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= philo_bonus
 CFLAGS	= -g3 -Wall -Wextra -Werror
 
 OUTDIR	= out/
-SRCS	= 
+SRCS	= philo_bonus.c	init_struct.c	do_action.c	utils.c
 OBJS	= $(SRCS:%.c=$(OUTDIR)%.o)
 
 all : $(NAME)
