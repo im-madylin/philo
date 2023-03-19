@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:52:57 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/17 15:17:54 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/19 16:07:09 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,17 @@ size_t	ft_strlen(const char *s)
 	return (count);
 }
 
-void	print_message(t_philo *philo, int flag)
+void	print_message(t_table *table, int flag)
 {
 	long	time;
 
-	pthread_mutex_lock(philo->print);
-	pthread_mutex_lock(&(philo->live->mutex));
-	if (philo->live->is_live == DIE)
-	{
-		pthread_mutex_unlock(&(philo->live->mutex));
-		pthread_mutex_unlock(philo->print);
-		return ;
-	}
-	pthread_mutex_unlock(&(philo->live->mutex));
-	time = get_time_diff(*(philo->start_time));
+	time = get_time_diff(table->start_time);
 	if (flag == FORK)
-		printf("%s%ld %d has taken a fork\n", C_NRML, time, philo->id);
+		printf("%s%ld %d has taken a fork\n", C_NRML, time, table->id);
 	else if (flag == EAT)
-		printf("%s%ld %d is eating\n", C_GREN, time, philo->id);
+		printf("%s%ld %d is eating\n", C_GREN, time, table->id);
 	else if (flag == SLEEP)
-		printf("%s%ld %d is sleeping\n", C_YLLW, time, philo->id);
+		printf("%s%ld %d is sleeping\n", C_YLLW, time, table->id);
 	else if (flag == THINK)
-		printf("%s%ld %d is thinking\n", C_BLUE, time, philo->id);
-	pthread_mutex_unlock(philo->print);
+		printf("%s%ld %d is thinking\n", C_BLUE, time, table->id);
 }

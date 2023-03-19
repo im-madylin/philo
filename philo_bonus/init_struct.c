@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:51:07 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/17 14:18:43 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/19 17:29:22 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ int	init_argv(int argc, char *src[], int argv[][5])
 	return (1);
 }
 
-int	init_table(t_table *table)
+void	init_table(t_table *table)
 {
 	table->forks = sem_open("fork", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
 	// table->eat_enough = sem_open("eat", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
 	gettimeofday(&(table->start_time), NULL);
 	table->recent_time = table->start_time;
+	table->id = 0;
 }

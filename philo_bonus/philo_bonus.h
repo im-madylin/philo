@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/17 14:19:02 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/19 17:29:30 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define INT_MAX 2147483647
 # define LEFT 0
@@ -59,6 +60,7 @@ typedef struct timeval	t_time;
 
 typedef struct s_table
 {
+	int			id;
 	int			argv[5];
 	sem_t		*forks;
 	// sem_t		*eat_enough;
@@ -67,10 +69,31 @@ typedef struct s_table
 }	t_table;
 
 /* philo.c */
+int		create_process(t_table *table);
+void	check_die(void);
 
 /* init_struct */
-int	init_argv(int argc, char *src[], int argv[][5]);
-int	init_table(t_table *table);
+int		init_argv(int argc, char *src[], int argv[][5]);
+void	init_table(t_table *table);
 
+/* do_action.c */
+int		do_action(t_table *table);
+int		do_think(t_table *table);
+int		do_eat(t_table *table);
+void	pick_up_fork(t_table *table);
+void	lock_the_fork(t_table *table);
+void	put_down_fork(t_table *table);
+void	unlock_the_fork(t_table *table);
+int	do_sleep(t_table *table);
+int	am_i_die(t_table *table);
+int	msleep(int ms);
+long	get_time_diff(t_time start);
+int	time_to_ms(t_time time);
+
+/* utils.c */
+int		ft_atoi(const char *str);
+int		safe_free(void **ptr);
+size_t	ft_strlen(const char *s);
+void	print_message(t_table *table, int flag);
 
 #endif
