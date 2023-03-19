@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 19:15:59 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/17 12:54:03 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_eat
 
 typedef struct s_philo
 {
-	int			num;
+	int			id;
 	t_live		*live;
 	t_fork		*forks[2];
 	int			*argv;
@@ -127,7 +127,6 @@ int		init_thread(t_table *table);
 
 /* utils.c */
 int		ft_atoi(const char *str);
-void	*ft_malloc(size_t size);
 int		safe_free(void **ptr);
 size_t	ft_strlen(const char *s);
 void	print_message(t_philo *philo, int flag);

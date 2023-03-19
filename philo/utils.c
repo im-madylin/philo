@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:14:11 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/15 20:35:03 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/19 16:01:32 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ int	ft_atoi(const char *str)
 	else if (result > max && sign == -1)
 		return (0);
 	return (result * sign);
-}
-
-void	*ft_malloc(size_t size)
-{
-	void	*tmp;
-
-	tmp = malloc(size);
-	if (tmp == NULL)
-		exit(1);
-	return (tmp);
 }
 
 int	safe_free(void **ptr)
@@ -87,12 +77,12 @@ void	print_message(t_philo *philo, int flag)
 	pthread_mutex_unlock(&(philo->live->mutex));
 	time = get_time_diff(*(philo->start_time));
 	if (flag == FORK)
-		printf("%s%ld %d has taken a fork\n", C_NRML, time, philo->num);
+		printf("%s%ld %d has taken a fork\n", C_NRML, time, philo->id);
 	else if (flag == EAT)
-		printf("%s%ld %d is eating\n", C_GREN, time, philo->num);
+		printf("%s%ld %d is eating\n", C_GREN, time, philo->id);
 	else if (flag == SLEEP)
-		printf("%s%ld %d is sleeping\n", C_YLLW, time, philo->num);
+		printf("%s%ld %d is sleeping\n", C_YLLW, time, philo->id);
 	else if (flag == THINK)
-		printf("%s%ld %d is thinking\n", C_BLUE, time, philo->num);
+		printf("%s%ld %d is thinking\n", C_BLUE, time, philo->id);
 	pthread_mutex_unlock(philo->print);
 }

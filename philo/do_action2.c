@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:20:09 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 18:49:33 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/17 12:00:37 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	pick_up_fork(t_philo *philo)
 {
-	if (philo->num % 2 != 0)
+	if (philo->id % 2 != 0)
 	{
 		lock_the_fork(philo, LEFT);
 		if (philo->argv[NUM_PHILO] == 1)
@@ -67,7 +67,7 @@ void	lock_the_fork(t_philo *philo, int flag)
 
 void	put_down_fork(t_philo *philo)
 {
-	if (philo->num % 2 != 0)
+	if (philo->id % 2 != 0)
 	{
 		unlock_the_fork(philo, LEFT);
 		unlock_the_fork(philo, RIGHT);

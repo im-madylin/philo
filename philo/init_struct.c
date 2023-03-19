@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:45 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 18:55:20 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/17 12:00:51 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	init_philo(t_table *table)
 	while (++i <= num_philo)
 	{
 		philo = (table->philos + i);
-		philo->num = i;
+		philo->id = i;
 		philo->live = &(table->live);
 		philo->forks[LEFT] = &(table)->forks[i];
 		philo->forks[RIGHT] = &(table)->forks[1];
