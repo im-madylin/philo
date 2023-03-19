@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:20:25 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/19 17:29:07 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/19 19:46:25 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	create_process(t_table *table)
 		{
 			table->id = i;
 			do_action(table);
+			break ;
 		}
 		i++;
 	}
