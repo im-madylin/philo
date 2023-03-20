@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/19 17:29:30 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/20 14:57:42 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_table
 }	t_table;
 
 /* philo.c */
-int		create_process(t_table *table);
-void	check_die(void);
+int		create_process(t_table *table, pid_t **pid);
+void	check_die(pid_t *pid, int num);
 
 /* init_struct */
 int		init_argv(int argc, char *src[], int argv[][5]);
