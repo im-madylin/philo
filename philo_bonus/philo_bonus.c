@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:20:25 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 15:52:34 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/20 16:32:42 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	main(int argc, char *argv[])
 	if (init_argv(argc, argv, &(table.argv)) == FALSE)
 		return (0);
 	init_table(&table);
-	pid = (pid_t)malloc(sizeof(pid_t) * table.argv[NUM_PHILO]);
+	pid = (pid_t *)malloc(sizeof(pid_t) * table.argv[NUM_PHILO]);
 	if (pid == NULL)
 		return (0);
 	if (create_process(&table, &pid) == FALSE)
-		return (0); //처리 필요
+		return (kill_process(pid, table.argv[NUM_PHILO]));
 	check_die(pid, table.argv[NUM_PHILO]);
 }
 
@@ -53,13 +53,20 @@ int	create_process(t_table *table, pid_t **pid)
 void	check_die(pid_t *pid, int num)
 {
 	int	state;
+
+	waitpid(-1, &state, 0);
+	kill_process(pid, num);
+}
+
+int	kill_process(pid_t *pid, int num)
+{
 	int	i;
 
 	i = 0;
-	waitpid(-1, &state, 0);
 	while (i < num)
 	{
 		kill(pid[i], SIGKILL);
 		i++;
 	}
+	return (0);
 }

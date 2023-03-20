@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 14:57:42 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/20 17:00:58 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_table
 /* philo.c */
 int		create_process(t_table *table, pid_t **pid);
 void	check_die(pid_t *pid, int num);
+int		kill_process(pid_t *pid, int num);
 
 /* init_struct */
 int		init_argv(int argc, char *src[], int argv[][5]);
@@ -80,15 +81,19 @@ void	init_table(t_table *table);
 int		do_action(t_table *table);
 int		do_think(t_table *table);
 int		do_eat(t_table *table);
-void	pick_up_fork(t_table *table);
-void	lock_the_fork(t_table *table);
-void	put_down_fork(t_table *table);
-void	unlock_the_fork(t_table *table);
-int	do_sleep(t_table *table);
-int	am_i_die(t_table *table);
-int	msleep(int ms);
+int		do_sleep(t_table *table);
+
+/* do_action2.c */
+int		pick_up_fork(t_table *table);
+int		lock_the_fork(t_table *table);
+int		put_down_fork(t_table *table);
+int		unlock_the_fork(t_table *table);
+
+/* check_state.c */
+int		am_i_die(t_table *table);
+int		msleep(int ms);
 long	get_time_diff(t_time start);
-int	time_to_ms(t_time time);
+int		time_to_ms(t_time time);
 
 /* utils.c */
 int		ft_atoi(const char *str);
