@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:58:27 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 16:31:12 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:49:37 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	am_i_die(t_table *table)
 {
 	if (get_time_diff(table->recent_time) > table->argv[TIME_DIE])
 	{
+		sem_wait(table->print);
 		printf("%s%ld %d died\n", C_RED, \
 		get_time_diff(table->start_time), table->id);
 		return (DIE);

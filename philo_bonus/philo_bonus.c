@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:20:25 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 17:03:34 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 19:10:46 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char *argv[])
 {
 	t_table	table;
 	pid_t	*pid;
+	int		i;
 
 	if (argc != 5 && argc != 6)
 		return (0);
@@ -24,12 +25,16 @@ int	main(int argc, char *argv[])
 	init_table(&table);
 	pid = (pid_t *)malloc(sizeof(pid_t) * (table.argv[PROCESS]));
 	if (pid == NULL)
-		return (0);
-	if (create_process(&table, &pid) == FALSE)
-		return (kill_process(&pid, table.argv[PROCESS]));
-	check_die(&pid, table.argv[PROCESS]);
-	sem_close(table.forks);
-	sem_close(table.eat_enough);
+		return (close_sem(&table));
+	i = create_process(&table, &pid);
+	if (i != -1)
+	{
+		table.argv[PROCESS] = i;
+		return (kill_process(&table, &pid));
+	}
+		
+	check_die(&table, &pid);
+	return (0);
 }
 
 int	create_process(t_table *table, pid_t **pid)
@@ -41,7 +46,7 @@ int	create_process(t_table *table, pid_t **pid)
 	{
 		(*pid)[i] = fork();
 		if ((*pid)[i] < 0)
-			return (FALSE); //처리 어케하지
+			return (i);
 		else if ((*pid)[i] == 0)
 		{
 			table->id = i + 1;
@@ -60,32 +65,39 @@ int	create_eat_monitoring(t_table *table, pid_t **pid)
 	num = table->argv[NUM_PHILO];
 	(*pid)[num] = fork();
 	if ((*pid)[num] < 0)
-		return (FALSE);
+		return (num);
 	else if ((*pid)[num] == 0)
-	{
 		check_eat_enough(table);
-	}
-	return (TRUE);
+	return (-1);
 }
 
-void	check_die(pid_t **pid, int num)
+void	check_die(t_table *table, pid_t **pid)
 {
 	int	state;
 
 	waitpid(-1, &state, 0);
-	kill_process(pid, num);
+	kill_process(table, pid);
 }
 
-int	kill_process(pid_t **pid, int num)
+int	kill_process(t_table *table, pid_t **pid)
 {
 	int	i;
 
 	i = 0;
-	while (i < num)
+	while (i < table->argv[PROCESS])
 	{
 		kill((*pid)[i], SIGKILL);
 		i++;
 	}
 	safe_free((void **)pid);
+	close_sem(table);
+	return (0);
+}
+
+int	close_sem(t_table *table)
+{
+	sem_close(table->forks);
+	sem_close(table->eat_enough);
+	sem_close(table->print);
 	return (0);
 }

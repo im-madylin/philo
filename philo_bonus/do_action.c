@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 14:12:04 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 17:47:31 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 19:19:49 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	do_action(t_table *table)
 
 	eat_count = 0;
 	if (table->id % 2 == 0)
-		usleep(1000);
+		msleep(5);
 	while (am_i_die(table) == LIVE)
 	{
 		if (do_think(table) == 0)

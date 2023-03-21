@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:51:07 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 16:54:57 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:26:13 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	init_table(t_table *table)
 {
 	sem_unlink("fork");
 	sem_unlink("eat");
+	sem_unlink("print");
 	table->forks = sem_open("fork", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
 	table->eat_enough = sem_open("eat", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
+	table->print = sem_open("print", O_CREAT | O_EXCL, 0644, 1);
 	gettimeofday(&(table->start_time), NULL);
 	table->recent_time = table->start_time;
 	table->id = 0;

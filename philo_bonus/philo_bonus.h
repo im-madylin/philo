@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 16:54:41 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:54:49 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_table
 	int			argv[6];
 	sem_t		*forks;
 	sem_t		*eat_enough;
+	sem_t		*print;
 	t_time		start_time;
 	t_time		recent_time;
 }	t_table;
@@ -72,8 +73,9 @@ typedef struct s_table
 /* philo.c */
 int		create_process(t_table *table, pid_t **pid);
 int		create_eat_monitoring(t_table *table, pid_t **pid);
-void	check_die(pid_t **pid, int num);
-int		kill_process(pid_t **pid, int num);
+void	check_die(t_table *table, pid_t **pid);
+int		kill_process(t_table *table, pid_t **pid);
+int	close_sem(t_table *table);
 
 /* init_struct */
 int		init_argv(int argc, char *src[], int argv[][6]);

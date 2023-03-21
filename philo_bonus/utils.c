@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:52:57 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/19 16:07:09 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:49:23 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	print_message(t_table *table, int flag)
 {
 	long	time;
 
+	sem_wait(table->print);
 	time = get_time_diff(table->start_time);
 	if (flag == FORK)
 		printf("%s%ld %d has taken a fork\n", C_NRML, time, table->id);
@@ -75,4 +76,5 @@ void	print_message(t_table *table, int flag)
 		printf("%s%ld %d is sleeping\n", C_YLLW, time, table->id);
 	else if (flag == THINK)
 		printf("%s%ld %d is thinking\n", C_BLUE, time, table->id);
+	sem_post(table->print);
 }
