@@ -6,11 +6,35 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/17 12:00:02 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:38:47 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	check_die(t_table *table)
+{
+	int	i;
+
+	while (1)
+	{
+		i = 1;
+		msleep(1);
+		while (i <= table->argv[NUM_PHILO])
+		{
+			if (are_you_die(&(table->philos[i]), table->argv) == DIE \
+			|| check_eat_enough(table) == TRUE)
+			{
+				i = 1;
+				while (i <= table->argv[NUM_PHILO])
+					pthread_join(table->threads[i++], NULL);
+				destroy_mutex(table);
+				return ;
+			}
+			i++;
+		}
+	}
+}
 
 int	are_you_die(t_philo *philo, int argv[])
 {
@@ -59,4 +83,19 @@ int	check_eat_count(t_table *table)
 		i++;
 	}
 	return (is_enough);
+}
+
+void	destroy_mutex(t_table *table)
+{
+	int	i;
+
+	i = 1;
+	while (i <= table->argv[NUM_PHILO])
+	{
+		pthread_mutex_destroy(&(table->forks[i].mutex));
+		pthread_mutex_destroy(&(table->philos[i++].eat_info.mutex));
+		i++;
+	}
+	pthread_mutex_destroy(&(table->live.mutex));
+	pthread_mutex_destroy(&(table->print));
 }

@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/17 12:54:03 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:19:25 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ typedef struct s_table
 }	t_table;
 
 /* philo.c */
-void	check_die(t_table *table);
-void	destroy_mutex(t_table *table);
+int		init_struct(int argc, char *argv[], t_table *table);
 
 /* do_action.c */
 int		do_action(t_philo *philo);
@@ -108,9 +107,11 @@ void	put_down_fork(t_philo *philo);
 void	unlock_the_fork(t_philo *philo, int flag);
 
 /* check_state.c */
+void	check_die(t_table *table);
 int		are_you_die(t_philo *philo, int argv[]);
 int		check_eat_enough(t_table *table);
 int		check_eat_count(t_table *table);
+void	destroy_mutex(t_table *table);
 
 /* check_state2.c */
 int		am_i_die(t_philo *philo);
