@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 17:00:58 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:54:41 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define TIME_EAT 2
 # define TIME_SLEEP 3
 # define MUST_EAT 4
+# define PROCESS 5
 # define FORK 0
 # define EAT 1
 # define SLEEP 2
@@ -61,26 +62,28 @@ typedef struct timeval	t_time;
 typedef struct s_table
 {
 	int			id;
-	int			argv[5];
+	int			argv[6];
 	sem_t		*forks;
-	// sem_t		*eat_enough;
+	sem_t		*eat_enough;
 	t_time		start_time;
 	t_time		recent_time;
 }	t_table;
 
 /* philo.c */
 int		create_process(t_table *table, pid_t **pid);
-void	check_die(pid_t *pid, int num);
-int		kill_process(pid_t *pid, int num);
+int		create_eat_monitoring(t_table *table, pid_t **pid);
+void	check_die(pid_t **pid, int num);
+int		kill_process(pid_t **pid, int num);
 
 /* init_struct */
-int		init_argv(int argc, char *src[], int argv[][5]);
+int		init_argv(int argc, char *src[], int argv[][6]);
 void	init_table(t_table *table);
 
 /* do_action.c */
 int		do_action(t_table *table);
 int		do_think(t_table *table);
-int		do_eat(t_table *table);
+int		do_eat(t_table *table, int *eat_count);
+void	add_eat_count(t_table *table, int *eat_count);
 int		do_sleep(t_table *table);
 
 /* do_action2.c */
@@ -90,6 +93,7 @@ int		put_down_fork(t_table *table);
 int		unlock_the_fork(t_table *table);
 
 /* check_state.c */
+int		check_eat_enough(t_table *table);
 int		am_i_die(t_table *table);
 int		msleep(int ms);
 long	get_time_diff(t_time start);

@@ -6,13 +6,13 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:51:07 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 16:44:30 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:54:57 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	init_argv(int argc, char *src[], int argv[][5])
+int	init_argv(int argc, char *src[], int argv[][6])
 {
 	int	tmp[5];
 	int	i;
@@ -35,16 +35,21 @@ int	init_argv(int argc, char *src[], int argv[][5])
 	(*argv)[TIME_EAT] = tmp[2];
 	(*argv)[TIME_SLEEP] = tmp[3];
 	(*argv)[MUST_EAT] = 0;
+	(*argv)[PROCESS] = (*argv)[NUM_PHILO];
 	if (argc == 6)
+	{
 		(*argv)[MUST_EAT] = tmp[4];
+		(*argv)[PROCESS] += 1;
+	}
 	return (1);
 }
 
 void	init_table(t_table *table)
 {
 	sem_unlink("fork");
+	sem_unlink("eat");
 	table->forks = sem_open("fork", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
-	// table->eat_enough = sem_open("eat", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
+	table->eat_enough = sem_open("eat", O_CREAT | O_EXCL, 0644, table->argv[NUM_PHILO]);
 	gettimeofday(&(table->start_time), NULL);
 	table->recent_time = table->start_time;
 	table->id = 0;

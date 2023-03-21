@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:20:25 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 16:32:42 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:00:16 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	main(int argc, char *argv[])
 	if (init_argv(argc, argv, &(table.argv)) == FALSE)
 		return (0);
 	init_table(&table);
-	pid = (pid_t *)malloc(sizeof(pid_t) * table.argv[NUM_PHILO]);
+	pid = (pid_t *)malloc(sizeof(pid_t) * (table.argv[PROCESS]));
 	if (pid == NULL)
 		return (0);
 	if (create_process(&table, &pid) == FALSE)
-		return (kill_process(pid, table.argv[NUM_PHILO]));
-	check_die(pid, table.argv[NUM_PHILO]);
+		return (kill_process(&pid, table.argv[PROCESS]));
+	check_die(&pid, table.argv[PROCESS]);
 }
 
 int	create_process(t_table *table, pid_t **pid)
@@ -35,7 +35,7 @@ int	create_process(t_table *table, pid_t **pid)
 	int		i;
 
 	i = 0;
-	while (i <= table->argv[NUM_PHILO])
+	while (i < table->argv[NUM_PHILO])
 	{
 		(*pid)[i] = fork();
 		if ((*pid)[i] < 0)
@@ -43,14 +43,30 @@ int	create_process(t_table *table, pid_t **pid)
 		else if ((*pid)[i] == 0)
 		{
 			table->id = i + 1;
+			sem_wait(table->eat_enough);
 			do_action(table);
 		}
 		i++;
 	}
+	return (create_eat_monitoring(table, pid));
+}
+
+int	create_eat_monitoring(t_table *table, pid_t **pid)
+{
+	int	num;
+
+	num = table->argv[NUM_PHILO];
+	(*pid)[num] = fork();
+	if ((*pid)[num] < 0)
+		return (FALSE);
+	else if ((*pid)[num] == 0)
+	{
+		check_eat_enough(table);
+	}
 	return (TRUE);
 }
 
-void	check_die(pid_t *pid, int num)
+void	check_die(pid_t **pid, int num)
 {
 	int	state;
 
@@ -58,15 +74,16 @@ void	check_die(pid_t *pid, int num)
 	kill_process(pid, num);
 }
 
-int	kill_process(pid_t *pid, int num)
+int	kill_process(pid_t **pid, int num)
 {
 	int	i;
 
 	i = 0;
 	while (i < num)
 	{
-		kill(pid[i], SIGKILL);
+		kill((*pid)[i], SIGKILL);
 		i++;
 	}
+	safe_free((void **)pid);
 	return (0);
 }

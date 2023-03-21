@@ -6,11 +6,24 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:58:27 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/20 16:59:03 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:31:12 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+int	check_eat_enough(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->argv[NUM_PHILO])
+	{
+		sem_wait(table->eat_enough);
+		i++;
+	}
+	exit(0);
+}
 
 int	am_i_die(t_table *table)
 {
