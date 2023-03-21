@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:20:25 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 17:00:16 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:03:34 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int argc, char *argv[])
 	if (create_process(&table, &pid) == FALSE)
 		return (kill_process(&pid, table.argv[PROCESS]));
 	check_die(&pid, table.argv[PROCESS]);
+	sem_close(table.forks);
+	sem_close(table.eat_enough);
 }
 
 int	create_process(t_table *table, pid_t **pid)
