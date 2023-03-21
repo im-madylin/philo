@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 18:54:49 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:00:50 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,15 @@ typedef struct s_table
 	t_time		recent_time;
 }	t_table;
 
-/* philo.c */
+/* init_struct */
+int		init_argv(int argc, char *src[], int argv[][6], int j);
+void	init_table(t_table *table);
+
+/* process.c */
 int		create_process(t_table *table, pid_t **pid);
 int		create_eat_monitoring(t_table *table, pid_t **pid);
-void	check_die(t_table *table, pid_t **pid);
 int		kill_process(t_table *table, pid_t **pid);
-int	close_sem(t_table *table);
-
-/* init_struct */
-int		init_argv(int argc, char *src[], int argv[][6]);
-void	init_table(t_table *table);
+int		close_sem(t_table *table);
 
 /* do_action.c */
 int		do_action(t_table *table);
@@ -91,11 +90,15 @@ int		do_sleep(t_table *table);
 /* do_action2.c */
 int		pick_up_fork(t_table *table);
 int		lock_the_fork(t_table *table);
+void	spend_time_when_alone(t_table *table);
 int		put_down_fork(t_table *table);
 int		unlock_the_fork(t_table *table);
 
 /* check_state.c */
+void	check_die(t_table *table, pid_t **pid);
 int		check_eat_enough(t_table *table);
+
+/* check_state2.c */
 int		am_i_die(t_table *table);
 int		msleep(int ms);
 long	get_time_diff(t_time start);
