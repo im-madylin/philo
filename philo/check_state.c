@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/22 16:28:34 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 17:12:00 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,10 @@ int	check_eat_count(t_table *table)
 	while (i <= table->argv[NUM_PHILO])
 	{
 		philo = table->philos[i];
-		printf("here!!!! : %d\n", i);
-		printf("------monitor %d : %p------\n", i, &(philo.eat_info.mutex));
-		pthread_mutex_lock(&(philo.eat_info.mutex));
-		printf("here!!!!22222 : %d\n", i);
+		pthread_mutex_lock(philo.eat_info.mutex);
 		if (philo.eat_info.is_enough == FALSE)
 			is_enough = FALSE;
-		pthread_mutex_unlock(&(philo.eat_info.mutex));
+		pthread_mutex_unlock(philo.eat_info.mutex);
 		i++;
 	}
 	return (is_enough);
@@ -96,7 +93,7 @@ void	destroy_mutex(t_table *table)
 	while (i <= table->argv[NUM_PHILO])
 	{
 		pthread_mutex_destroy(&(table->forks[i].mutex));
-		pthread_mutex_destroy(&(table->philos[i++].eat_info.mutex));
+		pthread_mutex_destroy(table->philos[i++].eat_info.mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&(table->live.mutex));

@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/22 16:28:38 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 17:11:52 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,9 @@ void	add_eat_count(t_philo *philo)
 	philo->eat_info.count++;
 	if (philo->eat_info.count == philo->argv[MUST_EAT])
 	{
-		printf("------philo %d : %p------\n", philo->id, &(philo->eat_info.mutex));
-		pthread_mutex_lock(&(philo->eat_info.mutex));
-		printf("%d : eat enough\n", philo->id);
+		pthread_mutex_lock(philo->eat_info.mutex);
 		philo->eat_info.is_enough = TRUE;
-		pthread_mutex_unlock(&(philo->eat_info.mutex));
-		printf("%d : eat enough2222\n", philo->id);
+		pthread_mutex_unlock(philo->eat_info.mutex);
 	}
 }
 
