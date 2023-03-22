@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/22 16:35:38 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 19:06:05 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,14 @@ typedef struct s_table
 /* philo.c */
 int		init_struct(int argc, char *argv[], t_table *table);
 
+/* init_struct.c */
+int		init_argv(int argc, char *src[], int argv[][5]);
+int		init_fork(t_table *table);
+void	init_print_live(t_table *table);
+int		init_philo(t_table *table);
+int		init_eat_info(t_table *table, int i);
+int		init_thread(t_table *table);
+
 /* do_action.c */
 int		do_action(t_philo *philo);
 int		do_think(t_philo *philo);
@@ -112,7 +120,6 @@ void	check_die(t_table *table);
 int		are_you_die(t_philo *philo, int argv[]);
 int		check_eat_enough(t_table *table);
 int		check_eat_count(t_table *table);
-void	destroy_mutex(t_table *table);
 
 /* check_state2.c */
 int		am_i_die(t_philo *philo);
@@ -120,16 +127,14 @@ int		msleep(int ms);
 long	get_time_diff(t_time start_time);
 int		time_to_ms(t_time time);
 
-/* init_struct.c */
-int		init_argv(int argc, char *src[], int argv[][5]);
-int		init_fork(t_table *table);
-void	init_print_live(t_table *table);
-int		init_philo(t_table *table);
-int		init_thread(t_table *table);
+/* clean_resource.c */
+void	destroy_mutex(t_table *table);
+void	free_all(t_table *table);
+void	free_eat_info(t_table *table);
+int		safe_free(void **ptr);
 
 /* utils.c */
 int		ft_atoi(const char *str);
-int		safe_free(void **ptr);
 size_t	ft_strlen(const char *s);
 void	print_message(t_philo *philo, int flag);
 

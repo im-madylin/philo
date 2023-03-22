@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/22 17:12:00 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 18:35:17 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,4 @@ int	check_eat_count(t_table *table)
 		i++;
 	}
 	return (is_enough);
-}
-
-void	destroy_mutex(t_table *table)
-{
-	int	i;
-
-	i = 1;
-	while (i <= table->argv[NUM_PHILO])
-	{
-		pthread_mutex_destroy(&(table->forks[i].mutex));
-		pthread_mutex_destroy(table->philos[i++].eat_info.mutex);
-		i++;
-	}
-	pthread_mutex_destroy(&(table->live.mutex));
-	pthread_mutex_destroy(&(table->print));
 }

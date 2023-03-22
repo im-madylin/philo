@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:14:11 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/19 16:01:32 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 18:34:38 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ int	ft_atoi(const char *str)
 	else if (result > max && sign == -1)
 		return (0);
 	return (result * sign);
-}
-
-int	safe_free(void **ptr)
-{
-	free(*ptr);
-	*ptr = NULL;
-	return (0);
 }
 
 size_t	ft_strlen(const char *s)

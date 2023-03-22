@@ -6,15 +6,15 @@
 #    By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/02 13:41:52 by hahlee            #+#    #+#              #
-#    Updated: 2023/03/22 16:59:56 by hahlee           ###   ########.fr        #
+#    Updated: 2023/03/22 19:14:31 by hahlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
-CFLAGS	= -g3 -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS	= -Wall -Wextra -Werror
 
 OUTDIR	= out/
-SRCS	= philo.c	init_struct.c	do_action.c	do_action2.c	check_state.c	check_state2.c	utils.c
+SRCS	= philo.c	init_struct.c	init_struct2.c	do_action.c	do_action2.c	check_state.c	check_state2.c	clean_resource.c	utils.c
 OBJS	= $(SRCS:%.c=$(OUTDIR)%.o)
 
 all : $(NAME)

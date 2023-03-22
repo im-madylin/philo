@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/22 17:11:52 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 19:19:14 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	do_think(t_philo *philo)
 		return (0);
 	print_message(philo, THINK);
 	argv = philo->argv;
-	think_time = argv[TIME_DIE] - (argv[TIME_EAT] + argv[TIME_SLEEP] + 50);
+	think_time = argv[TIME_DIE] - (argv[TIME_EAT] + argv[TIME_SLEEP] + 100);
 	if (think_time <= 0)
 		return (1);
 	msleep(think_time);
