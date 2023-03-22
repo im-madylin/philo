@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:31:21 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 20:19:25 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 16:34:32 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_eat
 {
 	t_mutex	mutex;
 	int		count;
+	int		is_enough;
 }	t_eat;
 
 typedef struct s_philo

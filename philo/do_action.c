@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:28:03 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 20:39:05 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 16:28:38 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	do_action(t_philo *philo)
 	philo->recent_time = *(philo->start_time);
 	if (philo->id % 2 == 0)
 		msleep(5);
-	printf("%d\n", philo->live->is_live);
 	while (am_i_die(philo) == LIVE)
 	{
 		if (do_think(philo) == 0)
@@ -61,9 +60,16 @@ int	do_eat(t_philo *philo)
 
 void	add_eat_count(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->eat_info.mutex));
 	philo->eat_info.count++;
-	pthread_mutex_unlock(&(philo->eat_info.mutex));
+	if (philo->eat_info.count == philo->argv[MUST_EAT])
+	{
+		printf("------philo %d : %p------\n", philo->id, &(philo->eat_info.mutex));
+		pthread_mutex_lock(&(philo->eat_info.mutex));
+		printf("%d : eat enough\n", philo->id);
+		philo->eat_info.is_enough = TRUE;
+		pthread_mutex_unlock(&(philo->eat_info.mutex));
+		printf("%d : eat enough2222\n", philo->id);
+	}
 }
 
 int	do_sleep(t_philo *philo)

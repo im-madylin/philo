@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:31:52 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/21 20:38:47 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/03/22 16:28:34 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_die(t_table *table)
 	while (1)
 	{
 		i = 1;
-		msleep(1);
+		msleep(3);
 		while (i <= table->argv[NUM_PHILO])
 		{
 			if (are_you_die(&(table->philos[i]), table->argv) == DIE \
@@ -76,8 +76,11 @@ int	check_eat_count(t_table *table)
 	while (i <= table->argv[NUM_PHILO])
 	{
 		philo = table->philos[i];
+		printf("here!!!! : %d\n", i);
+		printf("------monitor %d : %p------\n", i, &(philo.eat_info.mutex));
 		pthread_mutex_lock(&(philo.eat_info.mutex));
-		if (philo.eat_info.count < philo.argv[MUST_EAT])
+		printf("here!!!!22222 : %d\n", i);
+		if (philo.eat_info.is_enough == FALSE)
 			is_enough = FALSE;
 		pthread_mutex_unlock(&(philo.eat_info.mutex));
 		i++;
