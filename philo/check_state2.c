@@ -6,7 +6,7 @@
 /*   By: hahlee <hahlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 19:23:04 by hahlee            #+#    #+#             */
-/*   Updated: 2023/03/16 18:49:16 by hahlee           ###   ########.fr       */
+/*   Updated: 2023/04/04 16:13:59 by hahlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	msleep(int ms)
 	gettimeofday(&start, NULL);
 	while (diff < ms)
 	{
-		usleep(100);
+		usleep(500);
 		gettimeofday(&end, NULL);
 		diff = time_to_ms(end) - time_to_ms(start);
 	}
