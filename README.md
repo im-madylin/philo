@@ -1,6 +1,10 @@
 # philosophers : 식사하는 철학자 문제 구현 프로젝트
 동시성 문제를 해결하기 위해 철학자들이 교착 상태 없이 식사, 생각, 잠자기를 반복하도록 하는 멀티스레드/멀티프로세스 시스템을 구현하는 프로젝트입니다.
 
+![2024-06-036 39 45-ezgif com-video-to-gif-converter](https://github.com/im-madylin/philosophers/assets/85945788/44208114-d4fc-402b-937c-ef19ca2be19d)
+
+
+
 ### 식사하는 철학자 문제란,
 식사하는 철학자 문제(Dining Philosophers Problem)는 1965년 에츠허르 데이크스트라(Edsger W. Dijkstra)가 제안한 고전적인 동시성 문제입니다. 이 문제는 여러 프로세스 간의 자원 경쟁과 교착 상태(deadlock)를 설명하기 위한 비유로 자주 사용됩니다.
 
@@ -36,12 +40,12 @@
    ```
 2. 디렉토리 이동
    ```
-   cd philosopher
+   cd philo   //mandatory part (멀티스레드)
+   cd philo_bonus  //bonus part (멀티프로세스)
    ```
 3. 컴파일
    ```
-   make  //mandatory part (멀티스레드)
-   make bonus  //bonus part (멀티프로세스)
+   make
    ```
 
 ## 실행 방법
